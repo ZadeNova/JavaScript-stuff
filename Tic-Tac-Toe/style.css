@@ -1,0 +1,37 @@
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+    margin: 0 auto;
+    width: 300px;
+    height: 300px;
+    border: 2px solid gold;
+}
+.displayPlayerName{
+
+    display:grid;
+    grid-template-columns: auto auto;
+    text-align:center;
+}
+.cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    border: 1px solid gold;
+    cursor: pointer;
+}
+
+.cell:hover{
+    background-color:beige;
+}
+
+#winnerMessage{
+    display: none;
+    margin-top: 5%;
+    margin-left:10%;
+    margin-right:10%;
+    padding:20px;
+    color:white;
+    background-color:lightgreen;
+}

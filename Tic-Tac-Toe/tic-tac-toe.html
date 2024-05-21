@@ -6,14 +6,30 @@
 <link rel="stylesheet" href="style.css">
 <style>
 </style>
-<script src="script.js"></script>
+
 <body>
-
-<div class="">
- <h1>This is a Heading</h1>
- <p>This is a paragraph.</p>
- <p>This is another paragraph.</p>
-</div>
-
+<section>
+    <div class="displayPlayerName">
+        <h2>Player 1</h2>
+        <h2>Player 2</h2>
+    </div>
+</section>
+    <div class="grid">
+        <div class="cell" id="1" data-clicked="false"></div>
+        <div class="cell" id="2" data-clicked="false"></div>
+        <div class="cell" id="3" data-clicked="false"></div>
+        <div class="cell" id="4" data-clicked="false"></div>
+        <div class="cell" id="5" data-clicked="false"></div>
+        <div class="cell" id="6" data-clicked="false"></div>
+        <div class="cell" id="7" data-clicked="false"></div>
+        <div class="cell" id="8" data-clicked="false"></div>
+        <div class="cell" id="9" data-clicked="false"></div>
+    </div>
+    <div id="winnerMessage">
+        <span class="closebtn" onclick="this.parentElement.style.display='none'">
+            <b id="winMessageDetail"></b>
+        &times;</span>
+    </div>
 </body>
+<script src="script.js"></script>
 </html>

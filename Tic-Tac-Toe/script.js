@@ -7,9 +7,10 @@ const gameBoard = (function (){
     const resetGameBoard = function() {
         theGameBoard = ['','','','','','','','',''];
     }
-
+    let gameEnd = false;
     
-    return {getBoard , resetGameBoard};
+    const getGameEnd = function() {return gameEnd};
+    return {getBoard , resetGameBoard , getGameEnd};
     
 
 
@@ -17,15 +18,19 @@ const gameBoard = (function (){
 
 
 
-const displayModule = (function(){
+const displayModule = (function(winner){
+
+    const winnerMessage = document.getElementById('winnerMessage')
+    winnerMessage.style.display = 'block';
+    const winMessageDetail = document.getElementById('winMessageDetail');
+    winMessageDetail.textContent = `Congrats ${winner} you have won the TIC-TAC-TOE Game`
+
+});
 
 
-
-})();
-
-
-function thePlayer(name,score,type,first){
-    return {name ,score,type,first};
+function thePlayer(name,score,type,turn,win){
+    
+    return {name ,score,type,turn,win};
 
 }
 
@@ -53,20 +58,92 @@ function startGame(){
     
     // Get the board to be filled with current player move each turn
     
-    gameBoard.getBoard().forEach(
-        theGame.oneTurnGameActions
-        
-    )
+    
 
+    // for(let i = 0; i < gameBoard.getBoard().length; i++){
+    //     const item = gameBoard.getBoard()[i]
+    //     theGame.oneTurnGameActions(item);
+    //     if (gameBoard.gameEnd === true){
+    //         console.log(`Game has ended because player has won. The winner is ${player1.win && !player2.win ? player1.name : player2.name} `)
+    //         break;
+    //     }
+    // }
+
+    //Convert the code to HTML now.
+
+    const htmlGridCells = document.querySelectorAll("div.cell");
+    console.log(htmlGridCells);
+    htmlGridCells.forEach( cell => {
+        cell.addEventListener('click', e => {
+            // Add the logic for each player now
+            if (player1.turn === true){
+                if (cell.dataset.clicked === 'false'){
+                    console.log(`${player1.name} turn`);
+
+                    // Assign player move into gameboard array
+                    gameBoard.getBoard()[e.target.id - 1] = player1.type;
+                    console.log(gameBoard.getBoard())
+
+                    // Styling of board once player clicks.
+                    cell.textContent = player1.type;
+
+                    // Set it so that cells cant be clicked again after being clicked once.
+                    cell.dataset.clicked = 'true'
+
+                    // Next Player Turn
+                    player1.turn = false;
+                    player2.turn = true;
+                }
+                
+
+            }
+            else if (player2.turn === true){
+                if (cell.dataset.clicked === 'false'){
+                    console.log(`${player2.name} turn`);
+                    console.log(e.target.id);
+
+                    // Assign player move into gameboard array
+                    gameBoard.getBoard()[e.target.id - 1] = player2.type;
+                    console.log(gameBoard.getBoard())
+
+                    // Styling of board once player clicks.
+                    cell.textContent = player2.type;
+
+                    // Set it so that cells cant be clicked again after being clicked once.
+                    cell.dataset.clicked = 'true'
+
+                    // Next Player Turn
+                    player2.turn = false;
+                    player1.turn = true;
+                }
+                
+            }
+            //  CHeck win con to end the game
+            if (checkWinCondition(player1,player2)){
+                //console.log(`${player1.win && !player2.win ? player1.name : player2.name}`);
+                
+                if(player1.win === true){
+                    console.log(player2.name, player2.win , 'wins');
+
+                }
+                
+
+                // Lock all cells
+                htmlGridCells.forEach(cell => cell.dataset.clicked = 'true');
+                
+                displayModule(player1.win && !player2.win ? player1.name : player2.name)
+                return;
+            };
+            
+        })
+    })
     
     // Check win condition before proceeding to the next turn
     // Ensure input is validated.
     
 
+     
     
-    // Who starts first? Write a function for who starts first.
-    // Write a function that allows the player to interact with the game
-    //theGame.getCurrentPlayerMove();
     
 }
 
@@ -113,17 +190,17 @@ function Game(player1,player2){
         //getCurrentPlayer().first  = false;
         if (player1.first === true){
             // Player1 turn
-            console.log(getCurrentPlayer().first,`${getCurrentPlayer().name}`);
-            console.log(getOtherPlayer().first,'bye');
-            player2.first = true;
-            player1.first = false;
+            console.log(getCurrentPlayer().turn,`${getCurrentPlayer().name}`);
+            //console.log(getOtherPlayer().first,'bye');
+            player2.turn = true;
+            player1.turn = false;
             console.log('111')
         }
         else if (player2.first === true){
-            console.log(getCurrentPlayer().first,`${getCurrentPlayer().name}`);
-            console.log(getOtherPlayer().first,'bye');
-            player2.first = false;
-            player1.first = true;
+            console.log(getCurrentPlayer().turn,`${getCurrentPlayer().name}`);
+            //console.log(getOtherPlayer().first,'bye');
+            player2.turn = false;
+            player1.turn = true;
             console.log('222')
         }
         
@@ -136,7 +213,7 @@ function Game(player1,player2){
         console.log(`What is your move ${getCurrentPlayer().name}?`);
         
         // Has to be number. Minus of 1 so that the input matches the array indexes.
-        let playerMove = Number(prompt(`What is your move ${getCurrentPlayer().name}. You are ${getCurrentPlayer().type}. Enter from 1 to 9.`) - 1)
+        //let playerMove = Number(prompt(`What is your move ${getCurrentPlayer().name}. You are ${getCurrentPlayer().type}. Enter from 1 to 9.`) - 1)
 
 
         let playerType = getCurrentPlayer().type;
@@ -151,7 +228,22 @@ function Game(player1,player2){
         console.log(gameBoard.getBoard());
     
     
-        console.log(checkWinCondition())
+        if(checkWinCondition()){
+            console.log(player1.name,player2.name);
+            console.log(`${player1.name} , ${player1.win}`);
+            console.log(`${player2.name} , ${player2.win}`);
+            if (player1.win === true){
+                console.log(`${player1.name} won`);
+                gameBoard.gameEnd = true;
+                
+                return;
+            }
+            else{
+                console.log(`player 2 ${player2.name} won`)
+                gameBoard.gameEnd = true;
+                return;
+            }
+        }
         // If win condition return true , stop game immediately.
         increaseTurnCount()
 
@@ -163,7 +255,7 @@ function Game(player1,player2){
 
 // Check for win condition
 
-function checkWinCondition(){
+function checkWinCondition(player1,player2){
 
     console.log(gameBoard.getBoard());
     // Loop through array for win conditions
@@ -171,15 +263,18 @@ function checkWinCondition(){
     let indicesX = [];
     let indicesO = [];
     const winCombos = [
-        [0,1,2],
-        [0,3,6],
-        [3,4,5],
-        [6,7,8],
-        [1,4,7],
-        [2,4,6],
-        [2,5,8],
-        [0,4,8]
+        [1, 2, 3],
+        [1, 4, 7],
+        [4, 5, 6],
+        [7, 8, 9],
+        [2, 5, 8],
+        [3, 5, 7],
+        [3, 6, 9],
+        [1, 5, 9]
     ];
+
+
+    
     // Check for X 
 
     for (let i = 0; i < gameBoard.getBoard().length; i++){
@@ -191,18 +286,46 @@ function checkWinCondition(){
     }
 
  
-    console.log(indicesX);
-    console.log(indicesO);
+    //console.log(indicesX);
+    //console.log(indicesO);
 
     
+    // for (let i = 0; i < winCombos.length; i++){
+    //     const winCombo = winCombos[i];
+    //     console.log(winCombo);
+    //     if (winCombo.every(num => indicesO.includes(num))){
+    //         return true;
+
+    //     }
+    //     else{
+    //         return false;
+    //     }
+        
+    // }
+
+
     for (let i = 0; i < winCombos.length; i++){
         const winCombo = winCombos[i];
         if (winCombo.every(num => indicesO.includes(num))){
+            player1.win = true;
+            player2.win = false;
+            console.log('hi');
             return true;
-
         }
-        return false;
+
+        if (winCombo.every(num1 => indicesX.includes(num1))){
+            player1.win = true;
+            player2.win = false;
+            console.log('hello');
+            return true;
+        
+        }
+        //console.log(winCombo);
+        //console.log('Hello')
+        //console.log(indicesO)
+        
     }
+    return false;
 
 
     
@@ -217,13 +340,13 @@ function determineFirstPlayer(player1,player2) {
     const randomNumber = Math.floor(Math.random() * 2);
 
     if ( randomNumber === 0 ){
-        player1.first = true;
-        player2.first = false;
+        player1.turn = true;
+        player2.turn = false;
         return player1;
     }
     else {
-        player2.first = true;
-        player1.first = false;
+        player2.turn = true;
+        player1.turn = false;
         return player2;
     }
 
