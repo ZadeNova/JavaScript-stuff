@@ -1,5 +1,18 @@
 const gameBoard = (function (){
 
+    const gridHTML = `
+        <div class="grid">
+            <div class="cell" id="1" data-clicked="false"></div>
+            <div class="cell" id="2" data-clicked="false"></div>
+            <div class="cell" id="3" data-clicked="false"></div>
+            <div class="cell" id="4" data-clicked="false"></div>
+            <div class="cell" id="5" data-clicked="false"></div>
+            <div class="cell" id="6" data-clicked="false"></div>
+            <div class="cell" id="7" data-clicked="false"></div>
+            <div class="cell" id="8" data-clicked="false"></div>
+            <div class="cell" id="9" data-clicked="false"></div>
+        </div>
+    `;
 
     // Setup the basic stuff like game board and game players.
     let theGameBoard = ['','','','','','','','',''];
@@ -10,7 +23,7 @@ const gameBoard = (function (){
     let gameEnd = false;
     
     const getGameEnd = function() {return gameEnd};
-    return {getBoard , resetGameBoard , getGameEnd};
+    return {getBoard , resetGameBoard , getGameEnd , gridHTML};
     
 
 
@@ -34,12 +47,30 @@ function thePlayer(name,score,type,turn,win){
 
 }
 
+
+function inputPlayerNames(){
+    let player1Input = document.getElementById('player1Input').value;
+    let player2Input = document.getElementById('player2Input').value;
+    if (player1Input === '' && player2Input === ''){
+        alert("Please enter something for the player Names");
+    }
+    else if (player1Input !== '' && player2Input !== ''){
+        document.getElementsByClassName('displayPlayerName')[0].innerHTML = 
+        `<div><h2>Player 1 Name</h2><h2 id="player1NameDisplay">${player1Input}</h2></div> <div><h2>Player 2 Name</h2><h2 id="player2NameDisplay">${player2Input}</h2></div>`        
+        document.getElementById('buttonDiv').innerHTML = ''
+
+    }
+    
+}
+
+
+
 // Start the game
-function startGame(){
+function startGame(playerName1, playerName2){
     // Max turns is 9.
     
-    const player1 = thePlayer('Aerion','','O');
-    const player2 = thePlayer('Nova','','X');
+    const player1 = thePlayer(playerName1,'','O');
+    const player2 = thePlayer(playerName2,'','X');
 
 
     const theFirstPlayer = determineFirstPlayer(player1,player2);
@@ -314,8 +345,8 @@ function checkWinCondition(player1,player2){
         }
 
         if (winCombo.every(num1 => indicesX.includes(num1))){
-            player1.win = true;
-            player2.win = false;
+            player1.win = false;
+            player2.win = true;
             console.log('hello');
             return true;
         
@@ -357,4 +388,17 @@ function determineFirstPlayer(player1,player2) {
 
 
 
-startGame();
+function startGameBtn(){
+    let player1Name = document.getElementById('player1NameDisplay').innerText;
+    let player2Name = document.getElementById('player2NameDisplay').innerText;
+    document.getElementById('gridHide').style.display = 'block';
+    startGame(player1Name , player2Name);
+}
+
+function restartGameBtn(){
+    let player1Name = document.getElementById('player1NameDisplay').innerText;
+    let player2Name = document.getElementById('player2NameDisplay').innerText;
+    gameBoard.resetGameBoard()
+    document.getElementById('gridHide').innerHTML = gameBoard.gridHTML;
+    startGame(player1Name , player2Name);
+}

@@ -10,10 +10,27 @@
 <body>
 <section>
     <div class="displayPlayerName">
-        <h2>Player 1</h2>
-        <h2>Player 2</h2>
+        <div class="displayPlayerName1">
+        <h2>
+            <label for="player1Name">Player 1 Name:</label>
+            <input type="text" name="player1Name" id="player1Input">
+            
+        </h2>
+        </div>
+        <div class="displayPlayerName2">
+        <h2>
+            <label for="player2Name">Player 2 Name:</label>
+            <input type="text" name="player2Name" id="player2Input">
+            
+        </h2>
+        
+        </div>
+        
     </div>
+    <div style="text-align: center;" id="buttonDiv"><button onclick="inputPlayerNames()" id="submitButton">Submit</button></div>
+    
 </section>
+    <div id="gridHide" style="display:none;">
     <div class="grid">
         <div class="cell" id="1" data-clicked="false"></div>
         <div class="cell" id="2" data-clicked="false"></div>
@@ -25,10 +42,15 @@
         <div class="cell" id="8" data-clicked="false"></div>
         <div class="cell" id="9" data-clicked="false"></div>
     </div>
+    </div>
     <div id="winnerMessage">
         <span class="closebtn" onclick="this.parentElement.style.display='none'">
             <b id="winMessageDetail"></b>
         &times;</span>
+    </div>
+    <div class="grid-container">
+        <div><button id="startBtn" onclick="startGameBtn()">Start Game</button></div>
+        <div><button id="endBtn" onclick="restartGameBtn()">Restart Game</button></div>
     </div>
 </body>
 <script src="script.js"></script>
