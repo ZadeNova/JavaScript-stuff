@@ -1,3 +1,12 @@
+class Book {
+    constructor(title,author,NumOfPages,HasRead){
+        this.title = title;
+        this.author = author;
+        this.NumOfPages = NumOfPages;
+        this.HasRead = HasRead;
+    }
+}
+
 let myLibrary = [new Book("A Game of Thrones","George R.R Martin",694,true) , new Book("A Clash of Kings","George R.R Martin",761,false)];
 
 // const book1 = new Book("A Game of Thrones","George R.R Martin",694,true);
@@ -6,12 +15,14 @@ let myLibrary = [new Book("A Game of Thrones","George R.R Martin",694,true) , ne
 
 // myLibrary = [book1,book2];
 
-function Book(title,author,NumOfPages,HasRead){
-    this.title = title;
-    this.author = author;
-    this.NumOfPages = NumOfPages;
-    this.HasRead = HasRead;
-}
+// function Book(title,author,NumOfPages,HasRead){
+//     this.title = title;
+//     this.author = author;
+//     this.NumOfPages = NumOfPages;
+//     this.HasRead = HasRead;
+// }
+
+
 
 function addBookToLibrary() {
 
