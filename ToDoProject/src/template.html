@@ -14,7 +14,6 @@
       <a
         data-bs-toggle="modal"
         data-bs-target="#myModal"
-        onclick="Populate_AddToDoModal()"
         >Add Task</a
       >
       <a onclick="">Search</a>
@@ -23,7 +22,7 @@
 
     <!-- Modal -->
     <div class="modal fade" id="myModal" role="dialog">
-      <div class="modal-dialog .modal-xl">
+      <div class="modal-dialog modal-xl">
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header">
@@ -33,33 +32,60 @@
               data-bs-dismiss="modal"
               aria-label="Close"
             ></button>
-            <h4 class="modal-title">Add Task</h4>
+            
           </div>
-
-          <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
-            <label for="floatingInput">ToDo Title</label>
+        
+        <div class="formInputs">
+            <h4 class="modal-title">Add Task</h4> 
+          
+          
+          <div class="mb-3">
+            <label for="floatingTitle">ToDo Title</label>
+            <input type="text" class="form-control" id="floatingTitle" placeholder="Name of ToDo Task">
+            
           </div>
-          <div class="form-floating">
-            <input type="text" class="form-control" id="floatingDescription" placeholder="Description">
+          <div class="">
             <label for="floatingDescription">Description</label>
+            <input type="text" class="form-control" id="floatingDescription" placeholder="Description">
+            
           </div>
-          <div class="form-floating mb-3">
-            <input type="date" class="form-control" id="floatingDate">
+          
+          <div class="row form-floating">
+          <div class="col-md-6">
             <label for="floatingDate">Date</label> 
+            <input type="date" class="form-control" id="floatingDate">
+            
           </div>
+          <div class="col-md-6">
+            <label for="floatingTime">Time</label> 
+            <input type="time" class="form-control" value="" id="floatingTime"/>
+            
+          </div>
+        </div>
+        <div class="form-floating">
+          <select class="form-select form-select-sm" id="todoPriority">
+            <option selected>Task's Priority Level</option>
+            <option value="1">Urgent</option>
+            <option value="2">High Priority</option>
+            <option value="3">Medium Priority</option>
+            <option value="4">Low Priority</option>
+          </select>
+        </div>
+        
 
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button type="button" class="btn btn-primary" id="btn_CreateToDo">Save changes</button>
+        </div>
           </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
+          
         </div>
       </div>
     </div>

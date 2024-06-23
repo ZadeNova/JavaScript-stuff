@@ -1,43 +1,46 @@
 @import "~bootstrap/scss/bootstrap";
- 
- 
- /* Basic styling for the body */
- body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
+
+/* Basic styling for the body */
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	display: flex;
 }
 
 /* Styling for the navbar */
 #navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 20%; /* Adjust the width as needed */
-    background-color: #333;
-    color: white;
-    padding: 20px;
-    box-sizing: border-box;
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 20%; /* Adjust the width as needed */
+	background-color: #333;
+	color: white;
+	padding: 20px;
+	box-sizing: border-box;
 }
 
 /* Styling for the main content */
 #mainContent {
-    margin-left: 25%; /* Adjust based on the width of the navbar */
-    padding: 20px;
-    box-sizing: border-box;
-    width: calc(100% - 25%); /* Adjust based on the width of the navbar */
+	margin-left: 25%; /* Adjust based on the width of the navbar */
+	padding: 20px;
+	box-sizing: border-box;
+	width: calc(100% - 25%); /* Adjust based on the width of the navbar */
 }
 
 /* Example link styling in the navbar */
 #navbar a {
-    color: white;
-    text-decoration: none;
-    display: block;
-    margin: 10px 0;
+	color: white;
+	text-decoration: none;
+	display: block;
+	margin: 10px 0;
 }
 
 #navbar a:hover {
-    background-color: #575757;
+	background-color: #575757;
+}
+
+.formInputs {
+	margin: 5%;
 }
