@@ -25,6 +25,7 @@ class ToDoObject {
 		this.#notes = notes;
 		this.#checklist = checklist;
 		this.#project = project;
+		ToDoObject.ToDoObjectCount++;
 	}
 
 	// Getters
@@ -84,6 +85,18 @@ class ToDoObject {
 	setCategory(project) {
 		this.#project = project;
 	}
+
+	toJSON() {
+		return {
+			title: this.#title,
+			description: this.#description,
+			date: this.#dueDate,
+			priority: this.#priority,
+			notes: this.#notes,
+			checklist: this.#checklist,
+			project: this.#project,
+		};
+	}
 }
 
 // Add methods to change each property in ToDoObject?
@@ -110,6 +123,14 @@ export function createToDoObject() {
 	);
 
 	return ToDoObject1;
+}
+
+export function UpdateToDoObject() {}
+
+export function countByProject(prjName) {
+	return JSON.parse(localStorage.getItem("ToDoTasks")).filter(
+		(todo) => todo.project === prjName
+	).length;
 }
 
 export default ToDoObject;

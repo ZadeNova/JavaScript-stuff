@@ -1,25 +1,15 @@
 import ToDoObjectClass from "./ToDo";
 
-
 class projects {
+	static projectCount = 0;
 
-    static projectCount = 0;
+	projectName;
 
-    constructor(){
-        this.ToDoObjectsUnderProject = [];
-    }
-
-    addToDo(ToDoObject){
-        if (ToDoObject instanceof ToDoObjectClass){
-            this.ToDoObjectsUnderProject.push(ToDoObject);
-        }
-    }
-
-    deleteToDo(ToDoObject){
-
-    }
+	constructor(prjName) {
+		this.ToDoObjectsUnderProject = [];
+		this.projectName = prjName;
+		projects.projectCount++;
+	}
 }
-
-
 
 export default projects;
