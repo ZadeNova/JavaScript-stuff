@@ -14,6 +14,7 @@
       <a
         data-bs-toggle="modal"
         data-bs-target="#myModal"
+        id="addTaskModal"
         >Add Task</a
       >
       <a onclick="">Search</a>
@@ -66,14 +67,16 @@
         </div>
         <div class="form-floating">
           <select class="form-select form-select-sm" id="todoPriority">
-            <option selected>Task's Priority Level</option>
+            
             <option value="Urgent">Urgent</option>
             <option value="High Priority">High Priority</option>
             <option value="Medium Priority">Medium Priority</option>
             <option value="Low Priority">Low Priority</option>
           </select>
         </div>
-        
+        <div class="form-floating">
+          <select id="projectSelect" class="form-select form-select-sm"></select>
+        </div>
 
         </div>
         <div class="modal-footer">

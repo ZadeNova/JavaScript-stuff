@@ -62,7 +62,15 @@ h1 {
 	text-align: center;
 }
 
-/* The card for todo and project items */
+
+.flex-container {
+	display: flex;
+  	justify-content: space-between;
+
+}
+
+
+/* The card for project items */
 .myCard {
 	background-color: transparent;
 	width: 190px;
@@ -156,3 +164,174 @@ h1 {
 		opacity: 0.3;
 	}
 }
+
+/* Task card CSS */
+.taskcard {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	
+	width:300px;
+	align-items: center;
+	justify-content: center;
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+	padding: 32px;
+	overflow: hidden;
+	border-radius: 10px;
+	background: #212121;
+	border: 2px solid #313131;
+	transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+  }
+  
+  .taskcontent {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	gap: 10px;
+	color: #e8e8e8;
+	transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+  }
+  
+  .taskcontent .heading {
+	font-weight: 700;
+	font-size: 22px;
+  }
+  
+  .taskcontent .para {
+	line-height: 1;
+  }
+  
+  .taskcontent  {
+	color: #e8e8e8;
+	text-decoration: none;
+	padding: 10px;
+	font-weight: 600;
+	border: none;
+	cursor: pointer;
+	background: #0974f1;
+	border-radius: 5px;
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .taskcard:hover {
+	box-shadow: 0 0 20px rgba(9, 117, 241, 0.8);
+	border-color: #0974f1;
+  }
+  
+  .taskcontent{
+	background: transparent;
+	color: #e8e8e8;
+  }
+  
+  .taskcontent {
+	box-shadow: none;
+  }
+
+  
+/* The task button css code */
+.editBtn {
+	--green: #1BFD9C;
+	font-size: 10px;
+	padding: 0.7em 2.7em;
+	letter-spacing: 0.06em;
+	position: relative;
+	font-family: inherit;
+	border-radius: 0.6em;
+	overflow: hidden;
+	transition: all 0.3s;
+	line-height: 1.4em;
+	border: 2px solid var(--green);
+	background: linear-gradient(to right, rgba(27, 253, 156, 0.1) 1%, transparent 40%,transparent 60% , rgba(27, 253, 156, 0.1) 100%);
+	color: var(--green);
+	box-shadow: inset 0 0 10px rgba(27, 253, 156, 0.4), 0 0 9px 3px rgba(27, 253, 156, 0.1);
+  }
+  
+  .editBtn:hover {
+	color: #82ffc9;
+	box-shadow: inset 0 0 10px rgba(27, 253, 156, 0.6), 0 0 9px 3px rgba(27, 253, 156, 0.2);
+  }
+  
+  .editBtn:before {
+	content: "";
+	position: absolute;
+	left: -4em;
+	width: 4em;
+	height: 100%;
+	top: 0;
+	transition: transform .4s ease-in-out;
+	background: linear-gradient(to right, transparent 1%, rgba(27, 253, 156, 0.1) 40%,rgba(27, 253, 156, 0.1) 60% , transparent 100%);
+  }
+  
+  .editBtn:hover:before {
+	transform: translateX(15em);
+  }
+  
+  .deleteBtn {
+	--red: rgb(220, 0, 0);  /* New red color definition */
+	font-size: 10px;
+	padding: 0.7em 2.7em;
+	letter-spacing: 0.06em;
+	position: relative;
+	font-family: inherit;
+	border-radius: 0.6em;
+	overflow: hidden;
+	transition: all 0.3s;
+	line-height: 1.4em;
+	border: 2px solid var(--red);  /* Use the new red color for border */
+	background: linear-gradient(to right, rgba(255, 0, 0, 0.1) 1%, transparent 40%,transparent 60% , rgba(255, 0, 0, 0.1) 100%);
+	/* Background gradient adjusted to use red instead of green */
+	color: var(--red);  /* Use the new red color for text */
+	box-shadow: inset 0 0 10px rgba(220, 0, 0, 0.4), 0 0 9px 3px rgba(220, 0, 0, 0.1);
+	/* Update box-shadow to use the new red color */
+  }
+  
+  .deleteBtn:hover {
+	color: #822727;  /* Hover color adjusted to a darker red for better contrast */
+	box-shadow: inset 0 0 10px rgba(220, 0, 0, 0.6), 0 0 9px 3px rgba(220, 0, 0, 0.2);
+	/* Update hover box-shadow to use the new red color */
+  }
+  
+  .deleteBtn:before {
+	content: "";
+	position: absolute;
+	left: -4em;
+	width: 4em;
+	height: 100%;
+	top: 0;
+	transition: transform .4s ease-in-out;
+	background: linear-gradient(to right, transparent 1%, rgba(220, 0, 0, 0.1) 40%,rgba(220, 0, 0, 0.1) 60% , transparent 100%);
+	/* Update before element background to use the new red color */
+  }
+  
+  .deleteBtn:hover:before {
+	transform: translateX(15em);
+  }
+
+
+/* priority level css code  */
+
+.priority-level {
+	font-weight: bold; /* Bold the text */
+	padding: 2px 5px;  /* Add some padding for better separation */
+	border-radius: 3px;  /* Rounded corners for a cleaner look */
+	color: white;  /* Ensure text is visible across backgrounds */
+  }
+  
+  /* Color variations based on priority (replace with your desired colors) */
+  .priority-level.urgent {
+	color: rgb(255, 0, 0) !important; /* Red for urgent */
+  }
+  
+  .priority-level.high {
+	color: rgb(255, 165, 0) !important; /* Orange for high */
+  }
+  
+  .priority-level.medium {
+	color: rgb(255, 255, 0) !important; /* Yellow for medium */
+  }
+  
+  .priority-level.low {
+	color: rgb(135, 206, 250) !important; /* Light blue for low */
+  }
+
+ 

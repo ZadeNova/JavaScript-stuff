@@ -9,11 +9,13 @@ import cardTemplate, * as HTMLTemplates from "./HTMLTemplates.js";
 // Create default data for the App
 localStorage.clear();
 
+const defaultPrj = new projects("Main");
+
 const prj1 = new projects("Life Improvement");
 
 const prj2 = new projects("Finances");
 
-let prjArray = [prj1, prj2];
+let prjArray = [defaultPrj, prj1 , prj2];
 let prjArrayJSON = JSON.stringify(prjArray);
 
 localStorage.setItem("Projects", prjArrayJSON);
@@ -59,14 +61,14 @@ const prjElement = document.getElementById("Projects");
 
 for (let i = 0; i < JSON.parse(localStorage.getItem("Projects")).length; i++) {
 	const newCard = document.createElement("div");
-	newCard.addEventListener("click", displayTaskUnderProjects);
-	newCard.innerHTML = cardTemplate(
+	//newCard.addEventListener("click", displayTaskUnderProjects);
+	newCard.innerHTML = HTMLTemplates.cardTemplate(
 		JSON.parse(localStorage.getItem("Projects"))[i].projectName,
 		ToDo.countByProject(
 			JSON.parse(localStorage.getItem("Projects"))[i].projectName
 		)
 	);
-
+	
 	prjElement.append(newCard);
 }
 
@@ -79,6 +81,16 @@ for (
 ) {}
 
 // Add Event Listeners
+
+// Create Project div event listener. Use for loop to ensure that all projects have event listeners added.
+const prjCard = document.getElementsByClassName("myCard");
+for (let i = 0; i < prjCard.length; i++){
+	prjCard[i].addEventListener("click",displayTaskUnderProjects);
+}
+
+// Modal event listeners
+const addTaskModal = document.getElementById("addTaskModal");
+addTaskModal.addEventListener("click",HTMLTemplates.generateSelectProjects);
 
 const createToDoObjectBtn = document.getElementById("btn_CreateToDo");
 createToDoObjectBtn.addEventListener("click", handleToDoObjBtn);
@@ -100,7 +112,12 @@ function handleToDoObjBtn() {
 	// Once you create the task , save the task into storage array
 
 	// Saving newly object into storage array.
-	AppStorage.saveTasks_tostorage(data);
+	AppStorage.saveTasks_tostorage(data.ToDoObject1);
+	console.log(data.toDoProject);
+	console.log(document.getElementById(`${data.toDoProject}count`))
+	document.getElementById(`${data.toDoProject}count`).innerText = data.prjCount;
+	//console.log(data.prjCount);
+	//document.getElementById(`${data.prjName}count`).innerText = toString(data.prjCount);
 }
 
 function resetAppToDefault() {
@@ -154,4 +171,14 @@ function resetAppToDefault() {
 	localStorage.setItem("ToDoTasks", todoArrayJSON);
 }
 
-function displayTaskUnderProjects() {}
+function displayTaskUnderProjects(event) {
+	//console.log('Hello the event listener is working')
+	tasksElement.innerHTML = '';
+	const prjName = event.currentTarget.id;
+	let todoArray = JSON.parse(localStorage.getItem('ToDoTasks')).filter(task => task.project === prjName);
+	todoArray.forEach(element => {
+		const newTaskCard = document.createElement('div');
+		newTaskCard.innerHTML = HTMLTemplates.TaskcardTemplate(element);
+		tasksElement.append(newTaskCard);
+	});
+}

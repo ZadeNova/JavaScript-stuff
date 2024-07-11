@@ -1,3 +1,5 @@
+import * as HTMLTemplates from "./HTMLTemplates.js";
+
 class ToDoObject {
 	static ToDoObjectCount = 0;
 
@@ -111,6 +113,7 @@ export function createToDoObject() {
 	const toDoDate = document.getElementById("floatingDate").value;
 	const toDoTime = document.getElementById("floatingTime").value;
 	const toDoPriority = document.getElementById("todoPriority").value;
+	const toDoProject = document.getElementById("projectSelect").value;
 
 	const ToDoObject1 = new ToDoObject(
 		toDoTitle,
@@ -119,10 +122,12 @@ export function createToDoObject() {
 		toDoPriority,
 		"",
 		"",
-		""
+		toDoProject
 	);
 
-	return ToDoObject1;
+	let prjCount = countByProject(toDoProject);
+	
+	return {ToDoObject1 , prjCount , toDoProject};
 }
 
 export function UpdateToDoObject() {}
