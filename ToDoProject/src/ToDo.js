@@ -1,5 +1,6 @@
 import * as HTMLTemplates from "./HTMLTemplates.js";
 import * as AppStorage from "./localStorage.js";
+import * as MainFile from "./index.js";
 
 class ToDoObject {
 	static ToDoObjectCount = 0;
@@ -32,61 +33,61 @@ class ToDoObject {
 	}
 
 	// Getters
-	getTitle() {
-		return this.#title;
+	get getTitle() {
+		return this.title;
 	}
 
-	getDescription() {
-		return this.#description;
+	get getDescription() {
+		return this.description;
 	}
 
-	getDueDate() {
-		return this.#dueDate;
+	get getDueDate() {
+		return this.dueDate;
 	}
 
-	getPriority() {
-		return this.#priority;
+	get getPriority() {
+		return this.priority;
 	}
 
-	getUniqueID() {
-		return this.#unique_id;
+	get getUniqueID() {
+		return this.unique_id;
 	}
 
-	getChecklist() {
-		return this.#checklist;
+	get getChecklist() {
+		return this.checklist;
 	}
 
-	getCategory() {
-		return this.#project;
+	get getCategory() {
+		return this.project;
 	}
 
 	// Setters
-	setTitle(title) {
-		this.#title = title;
+	set setTitle(title) {
+		this.title = title;
 	}
 
-	setDescription(description) {
-		this.#description = description;
+	set setDescription(description) {
+		this.description = description;
 	}
 
-	setDueDate(dueDate) {
-		this.#dueDate = dueDate;
+	set setDueDate(dueDate) {
+		this.dueDate = dueDate;
 	}
 
-	setPriority(priority) {
-		this.#priority = priority;
+	set setPriority(priority) {
+		this.priority = priority;
 	}
 
-	setUniqueID(unique_id) {
-		this.#unique_id = unique_id;
+	set setUniqueID(unique_id) {
+		this.unique_id = unique_id;
 	}
 
-	setChecklist(checklist) {
-		this.#checklist = checklist;
+	set setChecklist(checklist) {
+		this.checklist = checklist;
 	}
 
-	setCategory(project) {
-		this.#project = project;
+	set setCategory(project) {
+		this.project = project;
 	}
 
 	toJSON() {
@@ -112,7 +113,7 @@ export function createToDoObject() {
 	const toDoTitle = document.getElementById("floatingTitle").value;
 	const toDoDescription = document.getElementById("floatingDescription").value;
 	const toDoDate = document.getElementById("floatingDate").value;
-	const toDoTime = document.getElementById("floatingTime").value;
+	//const toDoTime = document.getElementById("floatingTime").value;
 	const toDoPriority = document.getElementById("todoPriority").value;
 	const toDoProject = document.getElementById("projectSelect").value;
 	const UniqueID = generateUUID();
@@ -132,7 +133,97 @@ export function createToDoObject() {
 }
 
 export function UpdateToDoObject(id) {
+
+	
 	console.log("udpate func working");
+
+	// Get Task ToDo item using the ID
+	let todoObjectArray = JSON.parse(localStorage.getItem("ToDoTasks"));
+	const index = todoObjectArray.findIndex((todo) => todo.unique_id === id);
+
+	//todoObjectArray[index];
+
+	// Set the values to the form
+	const formTitle = document.getElementById("editfloatingTitle");
+	const formDescription = document.getElementById("editfloatingDescription");
+	const formDate = document.getElementById("editfloatingDate");
+	const formPriority = document.getElementById("edittodoPriority");
+	const formProjectSelect = document.getElementById("editprojectSelect");
+
+	//console.log(todoObjectArray[index]);
+	formTitle.value = todoObjectArray[index].title;
+	formDescription.value = todoObjectArray[index].description;
+	formDate.value = todoObjectArray[index].dueDate;
+	formPriority.value = todoObjectArray[index].priority;
+	
+
+	// Update select project input values:
+	const dataArray = JSON.parse(localStorage.getItem("Projects"));
+
+	const selectElement = document.getElementById("editprojectSelect");
+	selectElement.innerHTML = "";
+	if (dataArray) {
+		dataArray.forEach((element) => {
+			const optionElement = document.createElement("option");
+			optionElement.value = element.projectName;
+			optionElement.textContent = element.projectName;
+
+			selectElement.appendChild(optionElement);
+		});
+	}
+
+	formProjectSelect.value = todoObjectArray[index].project;
+
+
+	// Function to update the values
+	let btnClicked = false;
+	const updateToDoBtn = document.getElementById("btn_updateToDo");
+	updateToDoBtn.addEventListener("click",() => {
+		console.log('The save changes button has been clicked');
+
+		// Set values 
+		todoObjectArray[index].title = formTitle.value
+		todoObjectArray[index].description = formDescription.value
+		todoObjectArray[index].dueDate = formDate.value
+		todoObjectArray[index].priority = formPriority.value
+		todoObjectArray[index].project = formProjectSelect.value
+		
+		localStorage.setItem("ToDoTasks",JSON.stringify(todoObjectArray));
+
+		// Need to update HTML too
+		const tasksElement = document.getElementById("ToDoTasks");
+		tasksElement.innerHTML = "";
+		
+		// New Array for the task's project.
+		let todoNewObjectArray = JSON.parse(localStorage.getItem("ToDoTasks")).filter((task) => task.project === todoObjectArray[index].project);
+		console.log('HELLO PROJECT NAMEEEE');
+		todoNewObjectArray.forEach((element) => {
+			const newTaskCard = document.createElement("div");
+			newTaskCard.innerHTML = HTMLTemplates.TaskcardTemplate(element);
+			tasksElement.append(newTaskCard);
+		});
+
+		// Add Update and Delete Event Listeners here:
+
+		const deleteTaskBtn = document.getElementsByClassName("deleteBtn");
+		for (let i = 0; i < deleteTaskBtn.length; i++) {
+			deleteTaskBtn[i].addEventListener("click", MainFile.handleToDoDeleteBtn);
+		}
+
+		const updateTaskBtn = document.getElementsByClassName("updateBtn");
+		for (let i = 0; i < updateTaskBtn.length; i++) {
+			updateTaskBtn[i].addEventListener("click", MainFile.handleToDoUpdateBtn);
+		}
+
+	})
+
+	
+	
+
+}
+
+export function updateToDoObjectValues(){
+
 }
 
 export function deleteToDoObject(id) {

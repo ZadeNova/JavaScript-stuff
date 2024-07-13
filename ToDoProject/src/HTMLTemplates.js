@@ -45,7 +45,7 @@ export function TaskcardTemplate(task) {
         </p>
         <p>Due by ${task.date}</p>
         <div class="flex-container">
-            <button class="updateBtn" data-taskID="${task.unique_id}">Edit</button>
+            <button class="updateBtn" data-taskID="${task.unique_id}" data-bs-toggle="modal" data-bs-target="#editTaskModal">Edit</button>
             <button class="deleteBtn" data-taskID="${task.unique_id}">Delete</button>
         </div>
     </div>

@@ -6,6 +6,12 @@ import projects, * as Projects from "./Projects.js";
 import cardTemplate, * as HTMLTemplates from "./HTMLTemplates.js";
 // Task is under project.
 
+// What to Do
+
+// Add create , update , delete for projects :(
+// After that project should be done!
+
+
 // Create default data for the App
 
 localStorage.clear();
@@ -25,7 +31,7 @@ localStorage.setItem("Projects", prjArrayJSON);
 const todo1 = new ToDoObject(
 	"Finish Coding Course",
 	"Try your best to complete the Odin Project Javascript Course",
-	new Date("2024-12-30"),
+	"2024-12-30",
 	"High",
 	ToDo.generateUUID(),
 	"",
@@ -35,7 +41,7 @@ const todo1 = new ToDoObject(
 const todo2 = new ToDoObject(
 	"Do 15 pull ups by August 30th 2024",
 	"Train in the gym to do pull ups",
-	new Date("2024-08-30"),
+	"2024-08-30",
 	"Medium",
 	ToDo.generateUUID(),
 	"",
@@ -45,7 +51,7 @@ const todo2 = new ToDoObject(
 const todo3 = new ToDoObject(
 	"Save $1000 by 30th September 2024",
 	"Save 1k before 30th september",
-	new Date("2024-09-30"),
+	"2024-09-30",
 	"Medium",
 	ToDo.generateUUID(),
 	"",
@@ -99,14 +105,9 @@ createToDoObjectBtn.addEventListener("click", handleToDoObjBtn);
 const resetAppBtn = document.getElementById("resetApp");
 resetAppBtn.addEventListener("click", resetAppToDefault);
 
+
 // Add Event Listener to task. Update and Delete.
 
-// Function to initialize basic stuff for the app like storage.
-
-// (function AppInit() {
-// 	AppStorage.createStorage_forApp();
-// 	console.log("App function started.");
-// })();
 
 function handleToDoObjBtn() {
 	const data = ToDo.createToDoObject();
@@ -125,14 +126,19 @@ function handleToDoObjBtn() {
 	//document.getElementById(`${data.prjName}count`).innerText = toString(data.prjCount);
 }
 
-function handleToDoDeleteBtn(event) {
-	console.log(event.target.dataset.taskid);
+export function handleToDoDeleteBtn(event) {
+	//console.log(event.target.dataset.taskid);
 	ToDo.deleteToDoObject(event.target.dataset.taskid);
 }
 
-function handleToDoUpdateBtn(event) {
-	console.log(event.target.dataset.taskid);
+export function handleToDoUpdateBtn(event) {
+	//console.log(event.target.dataset.taskid);
 	ToDo.UpdateToDoObject(event.target.dataset.taskid);
+
+	// Update the HTML
+	
+	
+
 }
 
 function resetAppToDefault() {
@@ -211,3 +217,6 @@ function displayTaskUnderProjects(event) {
 		updateTaskBtn[i].addEventListener("click", handleToDoUpdateBtn);
 	}
 }
+
+
+// functions related to project is here.
