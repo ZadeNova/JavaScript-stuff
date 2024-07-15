@@ -41,11 +41,30 @@ export function saveTasks_tostorage(Task) {
 			// Save the newly updated array
 			localStorage.setItem("ToDoTasks", JSON.stringify(StoredToDoArray));
 		}
-
-		// const StoredToDoArray = JSON.parse(localStorage.getItem(["ToDoTasks"]));
-		// StoredToDoArray.push(JSON.stringify(Task));
-		// console.log(StoredToDoArray);
 	} else {
 		console.log("it failed");
+	}
+}
+
+export function saveProject_tostorage(project) {
+	if (typeof Storage !== "undefined") {
+		// Create the storage
+
+		if (localStorage.getItem("Projects") === null) {
+			console.log(
+				"Project storage null so create new project local storage executed"
+			);
+			const projectArray = [];
+			const projectArrayJSON = JSON.stringify(projectArray);
+			localStorage.setItem("Projects", projectArrayJSON);
+		} else {
+			const storedProjectArray = JSON.parse(localStorage.getItem("Projects"));
+
+			storedProjectArray.push(project);
+
+			localStorage.setItem("Projects", JSON.stringify(storedProjectArray));
+		}
+	} else {
+		console.log("It Failed. Project local storage side");
 	}
 }

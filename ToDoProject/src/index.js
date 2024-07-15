@@ -11,7 +11,6 @@ import cardTemplate, * as HTMLTemplates from "./HTMLTemplates.js";
 // Add create , update , delete for projects :(
 // After that project should be done!
 
-
 // Create default data for the App
 
 localStorage.clear();
@@ -66,6 +65,7 @@ localStorage.setItem("ToDoTasks", todoArrayJSON);
 // Add eventlistener to display all the task under each project , when you click on a project.
 const prjElement = document.getElementById("Projects");
 
+// This is the for loop that generates the project cards;
 for (let i = 0; i < JSON.parse(localStorage.getItem("Projects")).length; i++) {
 	const newCard = document.createElement("div");
 	//newCard.addEventListener("click", displayTaskUnderProjects);
@@ -77,6 +77,29 @@ for (let i = 0; i < JSON.parse(localStorage.getItem("Projects")).length; i++) {
 	);
 
 	prjElement.append(newCard);
+}
+
+// function for the for loop that generates project cards
+
+export function generateProjectCards() {
+	const projectElement = document.getElementById("Projects");
+	projectElement.innerHTML = "";
+	for (
+		let i = 0;
+		i < JSON.parse(localStorage.getItem("Projects")).length;
+		i++
+	) {
+		const newCard = document.createElement("div");
+		//newCard.addEventListener("click", displayTaskUnderProjects);
+		newCard.innerHTML = HTMLTemplates.cardTemplate(
+			JSON.parse(localStorage.getItem("Projects"))[i].projectName,
+			ToDo.countByProject(
+				JSON.parse(localStorage.getItem("Projects"))[i].projectName
+			)
+		);
+
+		projectElement.append(newCard);
+	}
 }
 
 const tasksElement = document.getElementById("ToDoTasks");
@@ -95,6 +118,19 @@ for (let i = 0; i < prjCard.length; i++) {
 	prjCard[i].addEventListener("click", displayTaskUnderProjects);
 }
 
+// Create Project card buttons event listeners.
+
+const prjCardBtnsEdit = document.getElementsByClassName("prjBtnsEdit");
+const prjCardBtnsDelete = document.getElementsByClassName("prjBtnsDelete");
+
+for (let i = 0; i < prjCardBtnsEdit.length; i++) {
+	prjCardBtnsEdit[i].addEventListener("click", handleEditAndDeleteBtns);
+}
+
+for (let i = 0; i < prjCardBtnsDelete.length; i++) {
+	prjCardBtnsDelete[i].addEventListener("click", handleEditAndDeleteBtns);
+}
+
 // Modal event listeners
 const addTaskModal = document.getElementById("addTaskModal");
 addTaskModal.addEventListener("click", HTMLTemplates.generateSelectProjects);
@@ -105,9 +141,80 @@ createToDoObjectBtn.addEventListener("click", handleToDoObjBtn);
 const resetAppBtn = document.getElementById("resetApp");
 resetAppBtn.addEventListener("click", resetAppToDefault);
 
+const createProjectBtn = document.getElementById("btn_addProject");
+createProjectBtn.addEventListener("click", addProjectBtn);
 
 // Add Event Listener to task. Update and Delete.
 
+// Function to handle add project:
+
+function addProjectBtn() {
+	console.log("hi");
+	const data = Projects.createProject();
+	AppStorage.saveProject_tostorage(data);
+	// Update HTML side
+	prjElement.innerHTML = "";
+	// This is the for loop that generates the project cards;
+	for (
+		let i = 0;
+		i < JSON.parse(localStorage.getItem("Projects")).length;
+		i++
+	) {
+		const newCard = document.createElement("div");
+		//newCard.addEventListener("click", displayTaskUnderProjects);
+		newCard.innerHTML = HTMLTemplates.cardTemplate(
+			JSON.parse(localStorage.getItem("Projects"))[i].projectName,
+			ToDo.countByProject(
+				JSON.parse(localStorage.getItem("Projects"))[i].projectName
+			)
+		);
+
+		prjElement.append(newCard);
+	}
+
+	// Create Project div event listener. Use for loop to ensure that all projects have event listeners added.
+	const prjCard = document.getElementsByClassName("myCard");
+	for (let i = 0; i < prjCard.length; i++) {
+		prjCard[i].addEventListener("click", displayTaskUnderProjects);
+	}
+}
+
+function handleEditAndDeleteBtns(event) {
+	// Stops the onclick event for the <div> element. Stop the onclick event from bubbling up to the parent div.
+	event.stopPropagation();
+
+	//console.log(event.target.className);
+
+	if (event.target.className === "prjBtnsEdit") {
+		// Code to edit the project
+		Projects.updateProject(event.target.dataset.project);
+		for (let i = 0; i < prjCard.length; i++) {
+			prjCard[i].addEventListener("click", displayTaskUnderProjects);
+		}
+
+		for (let i = 0; i < prjCardBtnsEdit.length; i++) {
+			prjCardBtnsEdit[i].addEventListener("click", handleEditAndDeleteBtns);
+		}
+
+		for (let i = 0; i < prjCardBtnsDelete.length; i++) {
+			prjCardBtnsDelete[i].addEventListener("click", handleEditAndDeleteBtns);
+		}
+
+		// update the project count
+	} else {
+		// Code the Delete function
+		Projects.deleteProject(event.target.dataset.project);
+
+		generateProjectCards();
+		for (let i = 0; i < prjCardBtnsEdit.length; i++) {
+			prjCardBtnsEdit[i].addEventListener("click", handleEditAndDeleteBtns);
+		}
+
+		for (let i = 0; i < prjCardBtnsDelete.length; i++) {
+			prjCardBtnsDelete[i].addEventListener("click", handleEditAndDeleteBtns);
+		}
+	}
+}
 
 function handleToDoObjBtn() {
 	const data = ToDo.createToDoObject();
@@ -136,9 +243,6 @@ export function handleToDoUpdateBtn(event) {
 	ToDo.UpdateToDoObject(event.target.dataset.taskid);
 
 	// Update the HTML
-	
-	
-
 }
 
 function resetAppToDefault() {
@@ -194,6 +298,7 @@ function resetAppToDefault() {
 
 function displayTaskUnderProjects(event) {
 	//console.log('Hello the event listener is working')
+
 	tasksElement.innerHTML = "";
 	const prjName = event.currentTarget.id;
 	let todoArray = JSON.parse(localStorage.getItem("ToDoTasks")).filter(
@@ -217,6 +322,5 @@ function displayTaskUnderProjects(event) {
 		updateTaskBtn[i].addEventListener("click", handleToDoUpdateBtn);
 	}
 }
-
 
 // functions related to project is here.

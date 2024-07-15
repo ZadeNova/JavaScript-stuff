@@ -133,8 +133,6 @@ export function createToDoObject() {
 }
 
 export function UpdateToDoObject(id) {
-
-	
 	console.log("udpate func working");
 
 	// Get Task ToDo item using the ID
@@ -155,7 +153,6 @@ export function UpdateToDoObject(id) {
 	formDescription.value = todoObjectArray[index].description;
 	formDate.value = todoObjectArray[index].dueDate;
 	formPriority.value = todoObjectArray[index].priority;
-	
 
 	// Update select project input values:
 	const dataArray = JSON.parse(localStorage.getItem("Projects"));
@@ -174,29 +171,30 @@ export function UpdateToDoObject(id) {
 
 	formProjectSelect.value = todoObjectArray[index].project;
 
-
 	// Function to update the values
 	let btnClicked = false;
 	const updateToDoBtn = document.getElementById("btn_updateToDo");
-	updateToDoBtn.addEventListener("click",() => {
-		console.log('The save changes button has been clicked');
+	updateToDoBtn.addEventListener("click", () => {
+		console.log("The save changes button has been clicked");
 
-		// Set values 
-		todoObjectArray[index].title = formTitle.value
-		todoObjectArray[index].description = formDescription.value
-		todoObjectArray[index].dueDate = formDate.value
-		todoObjectArray[index].priority = formPriority.value
-		todoObjectArray[index].project = formProjectSelect.value
-		
-		localStorage.setItem("ToDoTasks",JSON.stringify(todoObjectArray));
+		// Set values
+		todoObjectArray[index].title = formTitle.value;
+		todoObjectArray[index].description = formDescription.value;
+		todoObjectArray[index].dueDate = formDate.value;
+		todoObjectArray[index].priority = formPriority.value;
+		todoObjectArray[index].project = formProjectSelect.value;
+
+		localStorage.setItem("ToDoTasks", JSON.stringify(todoObjectArray));
 
 		// Need to update HTML too
 		const tasksElement = document.getElementById("ToDoTasks");
 		tasksElement.innerHTML = "";
-		
+
 		// New Array for the task's project.
-		let todoNewObjectArray = JSON.parse(localStorage.getItem("ToDoTasks")).filter((task) => task.project === todoObjectArray[index].project);
-		console.log('HELLO PROJECT NAMEEEE');
+		let todoNewObjectArray = JSON.parse(
+			localStorage.getItem("ToDoTasks")
+		).filter((task) => task.project === todoObjectArray[index].project);
+		console.log("HELLO PROJECT NAMEEEE");
 		todoNewObjectArray.forEach((element) => {
 			const newTaskCard = document.createElement("div");
 			newTaskCard.innerHTML = HTMLTemplates.TaskcardTemplate(element);
@@ -214,17 +212,10 @@ export function UpdateToDoObject(id) {
 		for (let i = 0; i < updateTaskBtn.length; i++) {
 			updateTaskBtn[i].addEventListener("click", MainFile.handleToDoUpdateBtn);
 		}
-
-	})
-
-	
-	
-
+	});
 }
 
-export function updateToDoObjectValues(){
-
-}
+export function updateToDoObjectValues() {}
 
 export function deleteToDoObject(id) {
 	// Delete task from local storage.
@@ -254,6 +245,17 @@ export function countByProject(prjName) {
 	return JSON.parse(localStorage.getItem("ToDoTasks")).filter(
 		(todo) => todo.project === prjName
 	).length;
+}
+
+export function updateProjectNamesinTaskList(oldprjName, newPrjName) {
+	console.log("UPDATED TASK PROJECT NAME");
+	let todoArray = JSON.parse(localStorage.getItem("ToDoTasks"));
+	todoArray.forEach((task) => {
+		if (task.project === oldprjName) {
+			task.project === newPrjName;
+		}
+	});
+	localStorage.setItem("ToDoTasks", JSON.stringify(todoArray));
 }
 
 // Generate ID for task object

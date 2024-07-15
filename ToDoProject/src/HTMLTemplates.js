@@ -10,7 +10,12 @@ export function cardTemplate(prjName, numOfTasks) {
             <div class="backSide">
                 <p class="title" id="${prjName}count">${numOfTasks} Tasks under ${prjName}</p>
                 <p>Leave Me</p>
+			<div class="projectBtns">
+				<div><button class="prjBtnsEdit" data-project="${prjName}" data-bs-toggle="modal" data-bs-target="#editProjectModal">Edit</button></div>
+				<div><button class="prjBtnsDelete" data-project="${prjName}">Delete</button></div>
+			</div>
             </div>
+			
         </div>
     </div>
 `;
@@ -76,5 +81,9 @@ export function updateProjectCount(prjCount, prjName) {
 }
 
 export function deleteTaskCard(id) {
+	document.getElementById(id).remove();
+}
+
+export function deleteProjectCard(id) {
 	document.getElementById(id).remove();
 }
