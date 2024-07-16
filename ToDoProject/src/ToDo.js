@@ -252,9 +252,11 @@ export function updateProjectNamesinTaskList(oldprjName, newPrjName) {
 	let todoArray = JSON.parse(localStorage.getItem("ToDoTasks"));
 	todoArray.forEach((task) => {
 		if (task.project === oldprjName) {
-			task.project === newPrjName;
+			
+			task.project = newPrjName;
 		}
 	});
+
 	localStorage.setItem("ToDoTasks", JSON.stringify(todoArray));
 }
 

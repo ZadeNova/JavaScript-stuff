@@ -35,6 +35,7 @@ export function deleteProject(id) {
 
 export function updateProject(id) {
 	let oldprojectName = id;
+	//let newPrjName;
 	let projectArray = JSON.parse(localStorage.getItem("Projects"));
 
 	const index = projectArray.findIndex((proj) => proj.projectName === id);
@@ -63,8 +64,29 @@ export function updateProject(id) {
 			ToDo.countByProject(newPrjName),
 			newPrjName
 		);
+
+
+		// Add event listeners to the buttons
+		const prjCardBtnsEdit = document.getElementsByClassName("prjBtnsEdit");
+		const prjCardBtnsDelete = document.getElementsByClassName("prjBtnsDelete");
+
+		for (let i = 0; i < prjCardBtnsEdit.length; i++) {
+			prjCardBtnsEdit[i].addEventListener("click", mainFile.handleEditAndDeleteBtns);
+		}
+		
+		for (let i = 0; i < prjCardBtnsDelete.length; i++) {
+			prjCardBtnsDelete[i].addEventListener("click", mainFile.handleEditAndDeleteBtns);
+		}
+
+
+		const prjCard = document.getElementsByClassName("myCard");
+		for (let i = 0; i < prjCard.length; i++) {
+			prjCard[i].addEventListener("click", mainFile.displayTaskUnderProjects);
+		}
+
 		// Rest of the html updates is in the index.js function.
 	});
+	
 }
 
 export default projects;

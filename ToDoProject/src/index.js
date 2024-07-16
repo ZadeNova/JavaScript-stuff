@@ -179,7 +179,7 @@ function addProjectBtn() {
 	}
 }
 
-function handleEditAndDeleteBtns(event) {
+export function handleEditAndDeleteBtns(event) {
 	// Stops the onclick event for the <div> element. Stop the onclick event from bubbling up to the parent div.
 	event.stopPropagation();
 
@@ -188,24 +188,40 @@ function handleEditAndDeleteBtns(event) {
 	if (event.target.className === "prjBtnsEdit") {
 		// Code to edit the project
 		Projects.updateProject(event.target.dataset.project);
-		for (let i = 0; i < prjCard.length; i++) {
-			prjCard[i].addEventListener("click", displayTaskUnderProjects);
-		}
 
-		for (let i = 0; i < prjCardBtnsEdit.length; i++) {
-			prjCardBtnsEdit[i].addEventListener("click", handleEditAndDeleteBtns);
-		}
+		// generateProjectCards();
 
-		for (let i = 0; i < prjCardBtnsDelete.length; i++) {
-			prjCardBtnsDelete[i].addEventListener("click", handleEditAndDeleteBtns);
-		}
+		// HTMLTemplates.updateProjectCount(
+		// 	ToDo.countByProject(newProjectName),
+		// 	newProjectName
+		// );
+
+
+		// for (let i = 0; i < prjCard.length; i++) {
+		// 	//console.log('display task under projects')
+		// 	prjCard[i].addEventListener("click", displayTaskUnderProjects);
+		// }
+
+		// for (let i = 0; i < prjCardBtnsEdit.length; i++) {
+		// 	prjCardBtnsEdit[i].addEventListener("click", handleEditAndDeleteBtns);
+		// }
+
+		// for (let i = 0; i < prjCardBtnsDelete.length; i++) {
+		// 	prjCardBtnsDelete[i].addEventListener("click", handleEditAndDeleteBtns);
+		// }
 
 		// update the project count
+		//HTMLTemplates.updateProjectCount()
 	} else {
 		// Code the Delete function
 		Projects.deleteProject(event.target.dataset.project);
 
 		generateProjectCards();
+
+		for (let i = 0; i < prjCard.length; i++) {
+			prjCard[i].addEventListener("click", displayTaskUnderProjects);
+		}		
+
 		for (let i = 0; i < prjCardBtnsEdit.length; i++) {
 			prjCardBtnsEdit[i].addEventListener("click", handleEditAndDeleteBtns);
 		}
@@ -255,7 +271,9 @@ function resetAppToDefault() {
 
 	const prj2 = new projects("Finances");
 
-	let prjArray = [prj1, prj2];
+	const prj3 = new projects("Main")
+
+	let prjArray = [prj3, prj1, prj2];
 	let prjArrayJSON = JSON.stringify(prjArray);
 
 	localStorage.setItem("Projects", prjArrayJSON);
@@ -294,9 +312,24 @@ function resetAppToDefault() {
 	let todoArray = [todo1, todo2, todo3];
 	let todoArrayJSON = JSON.stringify(todoArray);
 	localStorage.setItem("ToDoTasks", todoArrayJSON);
+
+
+	generateProjectCards();
+	for (let i = 0; i < prjCard.length; i++) {
+		prjCard[i].addEventListener("click", displayTaskUnderProjects);
+	}		
+
+	for (let i = 0; i < prjCardBtnsEdit.length; i++) {
+		prjCardBtnsEdit[i].addEventListener("click", handleEditAndDeleteBtns);
+	}
+
+	for (let i = 0; i < prjCardBtnsDelete.length; i++) {
+		prjCardBtnsDelete[i].addEventListener("click", handleEditAndDeleteBtns);
+	}
+
 }
 
-function displayTaskUnderProjects(event) {
+export function displayTaskUnderProjects(event) {
 	//console.log('Hello the event listener is working')
 
 	tasksElement.innerHTML = "";
