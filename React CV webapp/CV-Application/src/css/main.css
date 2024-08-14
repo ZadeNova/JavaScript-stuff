@@ -1,0 +1,48 @@
+body,
+html {
+	height: 100%;
+	margin: 0;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+	display: flex;
+	height: 100vh; /* Full viewport height */
+}
+.left-side,
+.right-side {
+	flex: 1; /* Each side takes up half the screen */
+	padding: 20px;
+}
+
+.left-side {
+	background-color: #f4f4f4; /* Light background for the form */
+	/* display: flex; */
+	/* align-items: center; */
+	/* justify-content: center; */
+}
+
+.right-side {
+	background-color: #ffffff; /* White background for the display */
+	/* display: flex; */
+	/* align-items: center; */
+	justify-content: center;
+}
+
+h1,
+h3 {
+	color: black;
+}
+
+form {
+	width: 100%;
+}
+
+input {
+	width: 100%;
+}
+
+label {
+	display: block;
+	margin-bottom: 5px;
+}
