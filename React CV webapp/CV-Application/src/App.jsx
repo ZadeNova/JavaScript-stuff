@@ -6,18 +6,55 @@ import CVDisplay from "./components/CVDisplay.jsx";
 function App() {
 	//const [count, setCount] = useState(0);
 
-	const [personalInfoData , setpersonalInfoData] = useState({
-		Name: '',
-		phoneNumber: '',
+	const [personalInfoData, setpersonalInfoData] = useState({
+		Name: "",
+		phoneNumber: "",
 	});
 
-	const [educationInfoData , seteducationInfoData] = useState({
-		
-	})
+	const [educationDataList, setEducationList] = useState([]);
+
+	const [educationInfoData, seteducationInfoData] = useState({
+		schoolName: "",
+		qualification: "",
+		startDate: "",
+		endDate: "",
+	});
+
+	const [jobExperienceDataList, setjobExperienceDataList] = useState([]);
+
+	const [jobExperienceData, setjobExperienceData] = useState({
+		jobTitle: "",
+		companyName: "",
+		jobstartDate: "",
+		jobendDate: "",
+		jobResponsibilities: "",
+	});
+
+	const [technicalSkills, settechnicalSkills] = useState([]);
 
 	const handlePersonalFormDataChange = (newdata) => {
-		setpersonalInfoData(newdata)
-	}
+		setpersonalInfoData(newdata);
+	};
+
+	const addEducationInfoToList = (newdata) => {
+		setEducationList([...educationDataList, newdata]);
+	};
+
+	const handleEducationFormDataChange = (newdata) => {
+		seteducationInfoData(newdata);
+	};
+
+	const handleJobExperienceFormChange = (newdata) => {
+		setjobExperienceData(newdata);
+	};
+
+	const addJobInfoToList = (newdata) => {
+		setjobExperienceDataList([...jobExperienceDataList, newdata]);
+	};
+
+	const addSkillsToList = (newdata) => {
+		settechnicalSkills([...technicalSkills, newdata]);
+	};
 
 	return (
 		<>
@@ -25,12 +62,22 @@ function App() {
 				<h1 className="AppTitle">CV Application</h1>
 				<div className="container">
 					<div className="left-side">
-						<CVForm onPersonalInfoDataChange={handlePersonalFormDataChange} personalInfoFormData={personalInfoData}></CVForm>
-
+						<CVForm
+							onPersonalInfoDataChange={handlePersonalFormDataChange}
+							personalInfoFormData={personalInfoData}
+							educationInfoData={educationInfoData}
+							onEducationInfoChange={handleEducationFormDataChange}
+							addEducationDatToList={addEducationInfoToList}
+							jobExperienceInfoData={jobExperienceData}
+							onJobExperienceInfoChange={handleJobExperienceFormChange}
+							addJobExperienceDataToList={addJobInfoToList}
+							addSkillsToList={addSkillsToList}
+						></CVForm>
 					</div>
 					<div className="right-side">
-						
 						<h3>{personalInfoData.Name + personalInfoData.phoneNumber}</h3>
+						<h4>{console.log(educationDataList)}</h4>
+						{console.log(technicalSkills)}
 					</div>
 				</div>
 			</div>
