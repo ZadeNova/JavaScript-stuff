@@ -46,3 +46,18 @@ label {
 	display: block;
 	margin-bottom: 5px;
 }
+
+.AppTitle{
+	text-align: center;
+}
+
+
+
+/* CV display CSS */
+
+.personalInformation {
+	background-color:darkcyan;
+}
+
+
+

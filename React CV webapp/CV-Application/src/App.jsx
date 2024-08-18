@@ -1,19 +1,37 @@
 import { useState } from "react";
-import "./App.css";
 import "./css/main.css";
 import CVForm from "./components/CVForm.jsx";
+import CVDisplay from "./components/CVDisplay.jsx";
+
 function App() {
 	//const [count, setCount] = useState(0);
+
+	const [personalInfoData , setpersonalInfoData] = useState({
+		Name: '',
+		phoneNumber: '',
+	});
+
+	const [educationInfoData , seteducationInfoData] = useState({
+		
+	})
+
+	const handlePersonalFormDataChange = (newdata) => {
+		setpersonalInfoData(newdata)
+	}
 
 	return (
 		<>
 			<div className="content">
-				<h1>CV Application</h1>
+				<h1 className="AppTitle">CV Application</h1>
 				<div className="container">
 					<div className="left-side">
-						<CVForm></CVForm>
+						<CVForm onPersonalInfoDataChange={handlePersonalFormDataChange} personalInfoFormData={personalInfoData}></CVForm>
+
 					</div>
-					<div className="right-side"></div>
+					<div className="right-side">
+						
+						<h3>{personalInfoData.Name + personalInfoData.phoneNumber}</h3>
+					</div>
 				</div>
 			</div>
 		</>
