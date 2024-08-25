@@ -3,6 +3,8 @@ import "./css/main.css";
 import CVForm from "./components/CVForm.jsx";
 import CVDisplay from "./components/CVDisplay.jsx";
 
+
+
 function App() {
 	//const [count, setCount] = useState(0);
 
@@ -13,24 +15,28 @@ function App() {
 
 	const [educationDataList, setEducationList] = useState([]);
 
-	const [educationInfoData, seteducationInfoData] = useState({
-		schoolName: "",
-		qualification: "",
-		startDate: "",
-		endDate: "",
-	});
+	const [appState_educationInfoData, set_AppState_educationInfoData] = useState([]);
+
+	const [appState_jobExperienceInfoData, set_AppState_jobExperienceInfoData] = useState([]);
 
 	const [jobExperienceDataList, setjobExperienceDataList] = useState([]);
 
-	const [jobExperienceData, setjobExperienceData] = useState({
-		jobTitle: "",
-		companyName: "",
-		jobstartDate: "",
-		jobendDate: "",
-		jobResponsibilities: "",
-	});
+	// const [jobExperienceData, setjobExperienceData] = useState({
+	// 	id: "",
+	// 	jobTitle: "",
+	// 	companyName: "",
+	// 	jobstartDate: "",
+	// 	jobendDate: "",
+	// 	jobResponsibilities: "",
+	// });
 
-	const [technicalSkills, settechnicalSkills] = useState([]);
+	const [technicalSkillsList , settechnicalSkillsList] = useState([])
+
+	const [technicalSkills, settechnicalSkills] = useState(
+		{id:"",
+			skill:"",
+		}
+	);
 
 	const handlePersonalFormDataChange = (newdata) => {
 		setpersonalInfoData(newdata);
@@ -40,8 +46,38 @@ function App() {
 		setEducationList([...educationDataList, newdata]);
 	};
 
+	const deleteEducationInfoFromList = (idToRemove) => {
+		setEducationList(educationDataList.filter((education) => education.id !== idToRemove));
+	};
+
+	const deleteJobExperienceInfoFromList = (idToRemove) => {
+		setjobExperienceDataList(jobExperienceDataList.filter((jobExperience) => jobExperience.id !== idToRemove))
+	};
+
+	const deleteSkills = (idToRemove) => {
+		settechnicalSkillsList(technicalSkillsList.filter((skills) => skills.id !== idToRemove))
+	};
+
 	const handleEducationFormDataChange = (newdata) => {
-		seteducationInfoData(newdata);
+
+		//console.log(newdata)
+		//console.log(newdata[0]);
+		//console.log(appState_educationInfoData.some(education => education.id === newdata[0].id))
+
+		// The update to app state will have an if statement. This is to determine if whether the change is an update or an addition.
+		// Use uuids to find a match between the newdata and the app state data.
+
+
+		if (appState_educationInfoData.some(education => education.id === newdata.id)){
+			console.log('The update if')
+			const updated_appState_educationInfoData = appState_educationInfoData.map(app_Edu => app_Edu.id === newdata.id ? newdata : app_Edu);
+	
+			set_AppState_educationInfoData(updated_appState_educationInfoData);
+		}
+		else{
+			set_AppState_educationInfoData([...appState_educationInfoData, newdata]);
+		}
+		
 	};
 
 	const handleJobExperienceFormChange = (newdata) => {
@@ -52,9 +88,16 @@ function App() {
 		setjobExperienceDataList([...jobExperienceDataList, newdata]);
 	};
 
-	const addSkillsToList = (newdata) => {
-		settechnicalSkills([...technicalSkills, newdata]);
+	const handleSkillFormChange = (newdata) => {
+		settechnicalSkills(newdata)
+	}
+
+	const addtechnicalSkillsToList = (newdata) => {
+		
+		settechnicalSkillsList([...technicalSkillsList , newdata]);
 	};
+
+
 
 	return (
 		<>
@@ -65,19 +108,25 @@ function App() {
 						<CVForm
 							onPersonalInfoDataChange={handlePersonalFormDataChange}
 							personalInfoFormData={personalInfoData}
-							educationInfoData={educationInfoData}
+							appState_educationInfoData={appState_educationInfoData}
 							onEducationInfoChange={handleEducationFormDataChange}
-							addEducationDatToList={addEducationInfoToList}
-							jobExperienceInfoData={jobExperienceData}
+							appState_jobExperienceInfoData={appState_jobExperienceInfoData}
 							onJobExperienceInfoChange={handleJobExperienceFormChange}
-							addJobExperienceDataToList={addJobInfoToList}
-							addSkillsToList={addSkillsToList}
+							onSkillInfoChange={handleSkillFormChange}
+							addSkillsToList={addtechnicalSkillsToList}
+							educationList={educationDataList}
+							jobExperienceList={jobExperienceDataList}
+							skillInfoData={technicalSkills}
+							skillsList={technicalSkillsList}
+							deleteEducation={deleteEducationInfoFromList}
+							deleteJobExperience={deleteJobExperienceInfoFromList}
+							deleteSkills={deleteSkills}
 						></CVForm>
 					</div>
 					<div className="right-side">
 						<h3>{personalInfoData.Name + personalInfoData.phoneNumber}</h3>
-						<h4>{console.log(educationDataList)}</h4>
-						{console.log(technicalSkills)}
+						<h4>{console.log(appState_educationInfoData)}</h4>
+						{console.log(jobExperienceDataList)}
 					</div>
 				</div>
 			</div>

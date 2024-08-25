@@ -1,44 +1,97 @@
 import { useState } from "react";
 import "../css/main.css";
-import PersonalInfo from "./PersonalInfo.jsx";
+import displayDetailsInForm from "./DisplayDetails";
+import { v4 as uuid } from "uuid";
+
 
 function Form({
 	personalInfoFormData,
 	onPersonalInfoDataChange,
-	educationInfoData,
 	onEducationInfoChange,
-	addEducationDataToList,
-	jobExperienceInfoData,
+	appState_educationInfoData,
+	appState_jobExperienceInfoData,
 	onJobExperienceInfoChange,
-	addJobExperienceDataToList,
+	onSkillInfoChange,
 	addSkillsToList,
+	educationList,
+	jobExperienceList,
+	skillInfoData,
+	skillsList,
+	deleteEducation,
+	deleteJobExperience,
+	deleteSkills
 }) {
 	// const handleSubmit = (e) => {
 	// 	e.preventDefault();
 	// 	console.log("Form data submitted");
 	// };
 
-	// I need to write a function for every input to update state.
+	// Now add delete function for technical skills.
+	// After that add edit function for job exp , tech skills and , education exp.
+	// After that add DISPLAY CV SITE
+
+	// Finish up job experience. Follow same as edu experience
+
+	const [educationInfoData, seteducationInfoData] = useState([]);
+
+	const [jobExperienceInfoData , setJobExperienceInfoData] = useState([]);
 
 	const [firstName, setfirstName] = useState("");
 	const [lastName, setlastName] = useState("");
 	const [phoneNumber, setphoneNumber] = useState("");
 
-	const [schoolName, setSchoolName] = useState("");
-	const [qualification, setQualification] = useState("");
-	const [startDate, setStartDate] = useState("");
-	const [endDate, setEndDate] = useState("");
 
-	const [jobTitle, setjobTitle] = useState("");
-	const [companyName, setcompanyName] = useState("");
-	const [jobstartDate, setjobstartDate] = useState("");
-	const [jobendDate, setjobendDate] = useState("");
-	const [jobResponsibilities, setjobResponsibilities] = useState("");
+	// const [jobTitle, setjobTitle] = useState("");
+	// const [companyName, setcompanyName] = useState("");
+	// const [jobstartDate, setjobstartDate] = useState("");
+	// const [jobendDate, setjobendDate] = useState("");
+	// const [jobResponsibilities, setjobResponsibilities] = useState("");
 
 	const [skills, setSkills] = useState("");
 
-	const [isCheckedJob, setIsCheckedJob] = useState(false);
-	const [isChecked, setIsChecked] = useState(false);
+	const addEducation = () => {
+
+		if (educationInfoData.length < 3){
+
+			const newEduExperience = {
+				id: Date.now().toString(),
+				schoolName: "",
+				qualification: "",
+				startDate: "",
+				endDate: "",
+	
+	
+			}
+	
+			seteducationInfoData([...educationInfoData, newEduExperience])
+		}
+		else{
+			alert("Cant have more than 3 educations")
+		}
+		
+	}
+
+	const addJobExperience = () => {
+		if (jobExperienceInfoData.length < 5){
+			
+
+			const newJobExperience = {
+				id: Date.now().toString(),
+				jobTitle:"",
+				companyName: "",
+				jobStartDate: "",
+				jobEndDate: "",
+				jobResponsibilities: "",
+
+			}
+
+			setJobExperienceInfoData([...jobExperienceInfoData, newJobExperience])
+		}
+
+		else{
+			alert('Too much jobs')
+		}
+	}
 
 	const handlefirstNameChange = (event) => {
 		setfirstName(event.target.value);
@@ -52,53 +105,32 @@ function Form({
 		setphoneNumber(event.target.value);
 	};
 
-	const handleSchoolNameChange = (event) => {
-		setSchoolName(event.target.value);
-	};
-
-	const handleQualificationChange = (event) => {
-		setQualification(event.target.value);
-	};
-
-	const handlestartDateChange = (event) => {
-		setStartDate(event.target.value);
-	};
-
-	const handleendDateChange = (event) => {
-		setEndDate(event.target.value);
-	};
-
-	const handlejobTitleChange = (event) => {
-		setjobTitle(event.target.value);
-	};
-
-	const handleCompanyChange = (event) => {
-		setcompanyName(event.target.value);
-	};
-
-	const handlejobstartDate = (event) => {
-		setjobstartDate(event.target.value);
-	};
-
-	const handlejobendDate = (event) => {
-		setjobendDate(event.target.value);
-	};
-
-	const handleJobResponsibilities = (event) => {
-		setjobResponsibilities(event.target.value);
-	};
-
+	
 	const handleSkillsChange = (event) => {
 		setSkills(event.target.value);
 	};
 
-	const handleCheckboxChange = () => {
-		setIsChecked(!isChecked);
-	};
+	const handleEduChange = (id , event) =>{
+		const { name , value} = event.target;
+		
+		
 
-	const handleJobCheckboxChange = () => {
-		setIsCheckedJob(!isCheckedJob);
-	};
+		seteducationInfoData((prevEduExperiences) =>
+			prevEduExperiences.map((experience) => 
+				experience.id === id ? { ...experience, [name]: value,
+				} : experience
+			)
+		)
+	
+		
+	}
+
+	const handleJobChange = (id , event) => {
+		const {name , value} = event.target;
+
+		setJobExperienceInfoData((jobExp) => jobExp.map((exp) => exp.id === id ? {...exp, [name]: value, } : exp))
+	}
+
 
 	const saveGeneralInformationData = () => {
 		// Personal Info Data
@@ -109,26 +141,40 @@ function Form({
 		});
 	};
 
-	const saveEducationData = () => {
-		onEducationInfoChange({
-			...educationInfoData,
-			schoolName: schoolName,
-			qualification: qualification,
-			startDate: startDate,
-			endDate: endDate,
-		});
+	const saveEducationData = (id) => {
 
-		addEducationDataToList({
-			schoolName: schoolName,
-			qualification: qualification,
-			startDate: startDate,
-			endDate: endDate,
-		});
+		// There is app state data and CV form state data.
+		// App state data will be the main data.
+		// CV form data is used for handling form changes.
+		// This function exists for the 'save' button. This save button will allow the CV form data to go into App state data.
+		// There is an if statement to determine if its an update or an addition.
+
+		// If the ID exists , it will proceed to the update path. Else it will go to the addition path.
+		if (appState_educationInfoData.some(education => education.id === id)){
+			// Write the edit logic here
+			console.log('edit logic')
+			
+			appState_educationInfoData = appState_educationInfoData.map(app_Edu => {
+				const matchingEdu = educationInfoData.find(edu => edu.id === id);
+				return matchingEdu ? {...app_Edu, ...matchingEdu} : app_Edu
+			})
+			console.log(appState_educationInfoData)
+
+			onEducationInfoChange(appState_educationInfoData.find(education => education.id === id))
+		}
+		else{
+			onEducationInfoChange(educationInfoData.find(education => education.id === id ))
+		}
+		
+		//onEducationInfoChange(educationInfoData)
+		
+	
 	};
 
 	const addJobResponsibilities = () => {
 		onJobExperienceInfoChange({
 			...jobExperienceInfoData,
+			id: uuid(),
 			jobTitle: jobTitle,
 			companyName: companyName,
 			jobstartDate: jobstartDate,
@@ -137,6 +183,8 @@ function Form({
 		});
 
 		addJobExperienceDataToList({
+			...jobExperienceInfoData,
+			id: uuid(),
 			jobTitle: jobTitle,
 			companyName: companyName,
 			jobstartDate: jobstartDate,
@@ -146,12 +194,18 @@ function Form({
 	};
 
 	const addSkills = () => {
-		addSkillsToList(skills);
+
+		onSkillInfoChange({...skillInfoData,
+			id: uuid(),
+			skill:skills,
+		})
+
+		addSkillsToList({...skillInfoData,
+			id: uuid(),
+			skill:skills,
+		})
 	};
 
-	const sendJobData = () => {
-		console.log();
-	};
 
 	return (
 		<>
@@ -193,125 +247,117 @@ function Form({
 
 			<fieldset>
 				<legend>Education</legend>
-				<label htmlFor="schoolName">University/Instituation/School</label>
-				<input
-					type="text"
-					id="schoolName"
-					name="schoolName"
-					value={schoolName}
-					onChange={handleSchoolNameChange}
-				></input>
 
-				<label htmlFor="certName">Program/Degree/Diploma/Course</label>
-				<input
-					type="text"
-					id="certName"
-					name="certName"
-					value={qualification}
-					onChange={handleQualificationChange}
-				></input>
 
-				<label htmlFor="startDate">Start Date</label>
-				<input
-					type="date"
-					id="startDate"
-					name="startDate"
-					value={startDate}
-					onChange={handlestartDateChange}
-				></input>
-
-				<label htmlFor="onGoing">On-Going</label>
-				<input
-					type="checkbox"
-					id="onGoing"
-					name="onGoing"
-					checked={isChecked}
-					onChange={handleCheckboxChange}
-				></input>
-
-				{isChecked === true && (
+				<div>
+					{/* {console.log(appState_educationInfoData)}
+					{appState_educationInfoData.map((education) => 
+					
 					<>
-						<label htmlFor="endDate">End Date</label>
-						<input
-							type="date"
-							id="endDate"
-							name="endDate"
-							value={endDate}
-							onChange={handleendDateChange}
-						></input>
+					
+						<li key={education.id}>{education.schoolName}</li>
+						<button>Edit</button>
+						<button>Delete</button>
+					
+					
+					
+					
 					</>
+				
+				
 				)}
+					 */}
+					
+					
+				
+				
+					
+			
+				</div>
 
-				{/* /* Add a conditional statement to show end date if checkbox is not ticked. */}
-				<button onClick={saveEducationData}>Save</button>
+				<hr></hr>
+				<div>
+					<button onClick={addEducation}>Add Education</button>
+					{educationInfoData.map((experience) => (
+						<div key={experience.id}>
+							<label>School Name/Organisation</label>
+							<input type="text" name="schoolName" placeholder="School Name" value={experience.schoolName} onChange={(e) => handleEduChange(experience.id, e)}></input>
+
+							<label>Qualification</label>
+							<input type="text" name="qualification" placeholder="Qualification Diploma/Degree/Cert" value={experience.qualification} onChange={(e) => handleEduChange(experience.id, e)}></input>
+							<label>Start Date</label>
+							<input type="date" name="startDate" value={experience.startDate} onChange={(e) => handleEduChange(experience.id, e)}></input>
+							<label>End Date</label>
+							<input type="date" name="endDate" value={experience.endDate} onChange={(e) => handleEduChange(experience.id,e)}></input>
+
+
+							<button onClick={() => saveEducationData(experience.id)}>Save</button>
+
+						</div>
+
+
+					
+					))}
+
+
+				</div>
+				
+				
+
+				
 			</fieldset>
 			<fieldset>
 				<legend>Job Experience</legend>
+				
+				<div>
+				
+				</div>
+				<button onClick={addJobExperience}>Add Job Experience</button>
+				{
+					jobExperienceInfoData.map((jobexperience) => (
+						<div key={jobexperience.id}>
+							<label>Job Title</label>
+							<input type="text" name="jobTitle" placeholder="Senior Manager" value={jobexperience.jobTitle} onChange={(e) => handleJobChange(jobexperience.id, e)}></input>
+							<label>Company Name/Organisation Name</label>
+							<input type="text" name="companyName" placeholder="Facebook" value={jobexperience.companyName} onChange={(e) => handleJobChange(jobexperience.id , e)}></input>
+							<label>Job Start Date</label>
+							<input type="date" name="jobStartDate" value={jobexperience.jobStartDate} onChange={(e) => handleJobChange(jobexperience.id , e)}></input>
+							<label>Job End Date</label>
+							<input type="date" name="jobEndDate" value={jobexperience.jobEndDate} onChange={(e) => handleJobChange(jobexperience.id , e)}></input>
+							<label>Job Responsibilities</label>
+							<input type="text" name="jobResponsibilities" placeholder="Job Responsibilities" value={jobexperience.jobResponsibilities} onChange={(e) => handleJobChange(jobexperience.id, e)}></input>
 
-				<label htmlFor="jobTitle">Title/Position</label>
-				<input
-					type="text"
-					id="jobTitle"
-					name="jobTitle"
-					value={jobTitle}
-					onChange={handlejobTitleChange}
-				></input>
+							<button onClick={addJobResponsibilities}>Save</button>
+						</div>
+					))
+				}
 
-				<label htmlFor="companyName">Company/Organisation</label>
-				<input
-					type="text"
-					id="companyName"
-					name="companyName"
-					value={companyName}
-					onChange={handleCompanyChange}
-				></input>
+				
+				
 
-				<label htmlFor="jobstartDate">Starting Date</label>
-				<input
-					type="date"
-					id="jobstartDate"
-					name="jobstartDate"
-					value={jobstartDate}
-					onChange={handlejobstartDate}
-				></input>
-
-				<label htmlFor="onGoingJob">On-Going</label>
-				<input
-					type="checkbox"
-					id="onGoingJob"
-					name="onGoingJob"
-					checked={isCheckedJob}
-					onChange={handleJobCheckboxChange}
-				></input>
-
-				{isCheckedJob === true && (
-					<>
-						<label htmlFor="endDateJob">End Date</label>
-						<input
-							type="date"
-							id="endDateJob"
-							name="endDateJob"
-							value={jobendDate}
-							onChange={handlejobendDate}
-						></input>
-					</>
-				)}
-
-				<label htmlFor="jobResponsibilities">Job Responsibilities</label>
-				<input
-					type="text"
-					id="jobResponsibilities"
-					name="jobResponsibilities"
-					value={jobResponsibilities}
-					onChange={handleJobResponsibilities}
-				></input>
-				<button onClick={addJobResponsibilities}>Add</button>
-
-				<button onClick={sendJobData}>Save</button>
+				<button>Save</button>
 			</fieldset>
 
 			<fieldset>
 				<legend>Technical Skills</legend>
+				
+
+				<div>
+
+					{
+					skillsList.map((skill) =>
+						<>
+						<li key={skill.id}>{skill.skill}</li>
+						<button>Edit</button>
+						<button onClick={() => deleteSkills(skill.id)}>Delete</button>
+						{console.log(skillsList)}
+						</>
+						
+					
+					
+					)}
+					
+				</div>
 
 				<label htmlFor="skills">Skills</label>
 				<input
