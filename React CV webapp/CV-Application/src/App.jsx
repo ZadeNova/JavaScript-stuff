@@ -3,8 +3,6 @@ import "./css/main.css";
 import CVForm from "./components/CVForm.jsx";
 import CVDisplay from "./components/CVDisplay.jsx";
 
-
-
 function App() {
 	//const [count, setCount] = useState(0);
 
@@ -15,28 +13,20 @@ function App() {
 
 	const [educationDataList, setEducationList] = useState([]);
 
-	const [appState_educationInfoData, set_AppState_educationInfoData] = useState([]);
+	const [appState_educationInfoData, set_AppState_educationInfoData] = useState(
+		[]
+	);
 
-	const [appState_jobExperienceInfoData, set_AppState_jobExperienceInfoData] = useState([]);
+	const [appState_jobExperienceInfoData, set_AppState_jobExperienceInfoData] =
+		useState([]);
+
+	const [appState_skillInfoData, set_AppState_skillInfoData] = useState([]);
 
 	const [jobExperienceDataList, setjobExperienceDataList] = useState([]);
 
-	// const [jobExperienceData, setjobExperienceData] = useState({
-	// 	id: "",
-	// 	jobTitle: "",
-	// 	companyName: "",
-	// 	jobstartDate: "",
-	// 	jobendDate: "",
-	// 	jobResponsibilities: "",
-	// });
+	const [technicalSkillsList, settechnicalSkillsList] = useState([]);
 
-	const [technicalSkillsList , settechnicalSkillsList] = useState([])
-
-	const [technicalSkills, settechnicalSkills] = useState(
-		{id:"",
-			skill:"",
-		}
-	);
+	const [technicalSkills, settechnicalSkills] = useState({ id: "", skill: "" });
 
 	const handlePersonalFormDataChange = (newdata) => {
 		setpersonalInfoData(newdata);
@@ -47,19 +37,26 @@ function App() {
 	};
 
 	const deleteEducationInfoFromList = (idToRemove) => {
-		setEducationList(educationDataList.filter((education) => education.id !== idToRemove));
+		setEducationList(
+			educationDataList.filter((education) => education.id !== idToRemove)
+		);
 	};
 
 	const deleteJobExperienceInfoFromList = (idToRemove) => {
-		setjobExperienceDataList(jobExperienceDataList.filter((jobExperience) => jobExperience.id !== idToRemove))
+		setjobExperienceDataList(
+			jobExperienceDataList.filter(
+				(jobExperience) => jobExperience.id !== idToRemove
+			)
+		);
 	};
 
 	const deleteSkills = (idToRemove) => {
-		settechnicalSkillsList(technicalSkillsList.filter((skills) => skills.id !== idToRemove))
+		settechnicalSkillsList(
+			technicalSkillsList.filter((skills) => skills.id !== idToRemove)
+		);
 	};
 
 	const handleEducationFormDataChange = (newdata) => {
-
 		//console.log(newdata)
 		//console.log(newdata[0]);
 		//console.log(appState_educationInfoData.some(education => education.id === newdata[0].id))
@@ -67,37 +64,59 @@ function App() {
 		// The update to app state will have an if statement. This is to determine if whether the change is an update or an addition.
 		// Use uuids to find a match between the newdata and the app state data.
 
+		if (
+			appState_educationInfoData.some(
+				(education) => education.id === newdata.id
+			)
+		) {
+			console.log("The update if");
+			const updated_appState_educationInfoData = appState_educationInfoData.map(
+				(app_Edu) => (app_Edu.id === newdata.id ? newdata : app_Edu)
+			);
 
-		if (appState_educationInfoData.some(education => education.id === newdata.id)){
-			console.log('The update if')
-			const updated_appState_educationInfoData = appState_educationInfoData.map(app_Edu => app_Edu.id === newdata.id ? newdata : app_Edu);
-	
 			set_AppState_educationInfoData(updated_appState_educationInfoData);
-		}
-		else{
+		} else {
 			set_AppState_educationInfoData([...appState_educationInfoData, newdata]);
 		}
-		
 	};
 
 	const handleJobExperienceFormChange = (newdata) => {
-		setjobExperienceData(newdata);
-	};
+		if (
+			appState_jobExperienceInfoData.some(
+				(job_exp) => job_exp.id === newdata.id
+			)
+		) {
+			console.log("The update for job exp");
+			const updated_appState_JobExperienceData =
+				appState_jobExperienceInfoData.map((job_exp) =>
+					job_exp.id === newdata.id ? newdata : job_exp
+				);
 
-	const addJobInfoToList = (newdata) => {
-		setjobExperienceDataList([...jobExperienceDataList, newdata]);
+			set_AppState_jobExperienceInfoData(updated_appState_JobExperienceData);
+		} else {
+			set_AppState_jobExperienceInfoData([
+				...appState_jobExperienceInfoData,
+				newdata,
+			]);
+		}
 	};
 
 	const handleSkillFormChange = (newdata) => {
-		settechnicalSkills(newdata)
-	}
-
-	const addtechnicalSkillsToList = (newdata) => {
-		
-		settechnicalSkillsList([...technicalSkillsList , newdata]);
+		// Continue on with this
+		if (appState_skillInfoData.some((skill) => skill.id === newdata.id)) {
+			console.log("The update for skill");
+			const updated_appState_skillData = appState_skillInfoData.map((skill) =>
+				skill.id === newdata.id ? newdata : skill
+			);
+			set_AppState_skillInfoData(updated_appState_skillData);
+		} else {
+			set_AppState_skillInfoData([...appState_skillInfoData, newdata]);
+		}
 	};
 
-
+	const addtechnicalSkillsToList = (newdata) => {
+		settechnicalSkillsList([...technicalSkillsList, newdata]);
+	};
 
 	return (
 		<>
@@ -116,8 +135,7 @@ function App() {
 							addSkillsToList={addtechnicalSkillsToList}
 							educationList={educationDataList}
 							jobExperienceList={jobExperienceDataList}
-							skillInfoData={technicalSkills}
-							skillsList={technicalSkillsList}
+							appState_skillInfoData={appState_skillInfoData}
 							deleteEducation={deleteEducationInfoFromList}
 							deleteJobExperience={deleteJobExperienceInfoFromList}
 							deleteSkills={deleteSkills}
@@ -127,6 +145,9 @@ function App() {
 						<h3>{personalInfoData.Name + personalInfoData.phoneNumber}</h3>
 						<h4>{console.log(appState_educationInfoData)}</h4>
 						{console.log(jobExperienceDataList)}
+						{console.log(appState_jobExperienceInfoData)}
+						{console.log("Skill list")}
+						{console.log(appState_skillInfoData)}
 					</div>
 				</div>
 			</div>
