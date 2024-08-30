@@ -55,9 +55,33 @@ label {
 
 /* CV display CSS */
 
-.personalInformation {
-	background-color:darkcyan;
+.displayCV {
+	display: grid;
+	grid-template-columns: 60% 40%;
+}
+
+.CVtitle h3 {
+	text-transform: uppercase;	
+	color: rgb(17, 72, 91);
+	border-bottom: 1px solid darkblue;
+}
+
+.CVtitle {
+	margin-right: 5%;
+	
 }
 
 
+.education {
+	display: grid;
+	grid-template-columns: 60% 40%;
+}
 
+.education .eduSchoolName {
+	margin-bottom: -20px;
+}
+
+.education .eduQualification {
+	font-weight: normal;
+	
+}

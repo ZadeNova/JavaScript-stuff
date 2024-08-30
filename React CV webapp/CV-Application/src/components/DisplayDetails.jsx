@@ -7,14 +7,30 @@ import "../css/main.css";
 
 
 
-function displayDetailsInForm({detailList}){
+function displayDetailsInForm({
+    personalInfoFormData,
+    educationData,
+    jobData,
+    skillsData,
+}){
     
     
     return(
     
     
     <>
-       
+        <div className="personalInfo">
+           
+
+
+        </div>
+
+
+
+
+
+
+
     </>
     
 

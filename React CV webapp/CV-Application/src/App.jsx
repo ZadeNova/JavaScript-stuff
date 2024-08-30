@@ -11,7 +11,7 @@ function App() {
 		phoneNumber: "",
 	});
 
-	const [educationDataList, setEducationList] = useState([]);
+	//const [educationDataList, setEducationList] = useState([]);
 
 	const [appState_educationInfoData, set_AppState_educationInfoData] = useState(
 		[]
@@ -22,9 +22,9 @@ function App() {
 
 	const [appState_skillInfoData, set_AppState_skillInfoData] = useState([]);
 
-	const [jobExperienceDataList, setjobExperienceDataList] = useState([]);
+	//const [jobExperienceDataList, setjobExperienceDataList] = useState([]);
 
-	const [technicalSkillsList, settechnicalSkillsList] = useState([]);
+	//const [technicalSkillsList, settechnicalSkillsList] = useState([]);
 
 	const [technicalSkills, settechnicalSkills] = useState({ id: "", skill: "" });
 
@@ -38,13 +38,13 @@ function App() {
 
 	const deleteEducationInfoFromList = (idToRemove) => {
 		setEducationList(
-			educationDataList.filter((education) => education.id !== idToRemove)
+			appState_educationInfoData.filter((education) => education.id !== idToRemove)
 		);
 	};
 
 	const deleteJobExperienceInfoFromList = (idToRemove) => {
 		setjobExperienceDataList(
-			jobExperienceDataList.filter(
+			appState_jobExperienceInfoData.filter(
 				(jobExperience) => jobExperience.id !== idToRemove
 			)
 		);
@@ -52,7 +52,7 @@ function App() {
 
 	const deleteSkills = (idToRemove) => {
 		settechnicalSkillsList(
-			technicalSkillsList.filter((skills) => skills.id !== idToRemove)
+			appState_skillInfoData.filter((skills) => skills.id !== idToRemove)
 		);
 	};
 
@@ -142,12 +142,12 @@ function App() {
 						></CVForm>
 					</div>
 					<div className="right-side">
-						<h3>{personalInfoData.Name + personalInfoData.phoneNumber}</h3>
-						<h4>{console.log(appState_educationInfoData)}</h4>
-						{console.log(jobExperienceDataList)}
-						{console.log(appState_jobExperienceInfoData)}
-						{console.log("Skill list")}
-						{console.log(appState_skillInfoData)}
+						<CVDisplay 
+						 personalInfoData = {personalInfoData}
+						 educationData = {appState_educationInfoData}
+						 jobData = {appState_jobExperienceInfoData}
+						 skillsData = {appState_skillInfoData}
+						></CVDisplay>
 					</div>
 				</div>
 			</div>

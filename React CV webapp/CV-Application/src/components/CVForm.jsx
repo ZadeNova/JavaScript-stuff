@@ -16,16 +16,13 @@ function Form({
 	jobExperienceList,
 	skillInfoData,
 	appState_skillInfoData,
-	deleteEducation,
-	deleteJobExperience,
-	deleteSkills,
 }) {
 	// const handleSubmit = (e) => {
 	// 	e.preventDefault();
 	// 	console.log("Form data submitted");
 	// };
 
-	// Now add delete function for technical skills.
+	// Now add delete function job exp , edu and tech skills
 	// After that add edit function for job exp , tech skills and , education exp.
 	// After that add DISPLAY CV SITE
 
@@ -209,6 +206,21 @@ function Form({
 		}
 	};
 
+	const deleteJobExp = (id) => {
+		setJobExperienceInfoData(jobExperienceInfoData.filter((jobexp) => jobexp.id !== id));
+		onJobExperienceInfoChange(appState_jobExperienceInfoData.filter((jobexp) => jobexp.id !== id));
+	}
+
+	const deleteEduExp = (id) => {
+		seteducationInfoData(educationInfoData.filter((eduexp) => eduexp.id !== id));
+		onEducationInfoChange(appState_educationInfoData.filter((eduexp) => eduexp.id !== id));
+	}
+
+	const deleteSkills = (id) => {
+		setSkillsList(skillsList.filter((skill) => skill.id !== id));
+		onSkillInfoChange(appState_skillInfoData.filter((skill) => skill.id !== id));
+	}
+
 	return (
 		<>
 			<h1 style={{ textAlign: "center" }}>CV Form</h1>
@@ -292,6 +304,7 @@ function Form({
 							<button onClick={() => saveEducationData(experience.id)}>
 								Save
 							</button>
+							<button onClick={() => deleteEduExp(experience.id) }>Delete</button>
 						</div>
 					))}
 				</div>
@@ -343,6 +356,7 @@ function Form({
 						></input>
 
 						<button onClick={() => saveJobData(jobexperience.id)}>Save</button>
+						<button onClick={() => deleteJobExp(jobexperience.id)}>Delete</button>
 					</div>
 				))}
 			</fieldset>
@@ -363,6 +377,7 @@ function Form({
 							onChange={(e) => handleSkillsChange(skill.id, e)}
 						></input>
 						<button onClick={() => saveSkillsData(skill.id)}>Save</button>
+						<button onClick={() => deleteSkills(skill.id)}>Delete</button>
 					</div>
 				))}
 			</fieldset>
