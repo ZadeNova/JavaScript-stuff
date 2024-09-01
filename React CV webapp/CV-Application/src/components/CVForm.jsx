@@ -12,22 +12,12 @@ function Form({
 	onJobExperienceInfoChange,
 	onSkillInfoChange,
 	addSkillsToList,
-	educationList,
-	jobExperienceList,
 	skillInfoData,
 	appState_skillInfoData,
+	deleteEducation,
+	deleteJobExperience,
+	deleteSkills,
 }) {
-	// const handleSubmit = (e) => {
-	// 	e.preventDefault();
-	// 	console.log("Form data submitted");
-	// };
-
-	// Now add delete function job exp , edu and tech skills
-	// After that add edit function for job exp , tech skills and , education exp.
-	// After that add DISPLAY CV SITE
-
-	// Finish up job experience. Follow same as edu experience
-
 	const [educationInfoData, seteducationInfoData] = useState([]);
 
 	const [jobExperienceInfoData, setJobExperienceInfoData] = useState([]);
@@ -127,7 +117,7 @@ function Form({
 		// Personal Info Data
 		onPersonalInfoDataChange({
 			...personalInfoFormData,
-			Name: firstName + lastName,
+			Name: firstName + " " + lastName,
 			phoneNumber: phoneNumber,
 		});
 	};
@@ -207,19 +197,27 @@ function Form({
 	};
 
 	const deleteJobExp = (id) => {
-		setJobExperienceInfoData(jobExperienceInfoData.filter((jobexp) => jobexp.id !== id));
-		onJobExperienceInfoChange(appState_jobExperienceInfoData.filter((jobexp) => jobexp.id !== id));
-	}
+		setJobExperienceInfoData(
+			jobExperienceInfoData.filter((jobexp) => jobexp.id !== id)
+		);
+		deleteJobExperience(id);
+	};
 
 	const deleteEduExp = (id) => {
-		seteducationInfoData(educationInfoData.filter((eduexp) => eduexp.id !== id));
-		onEducationInfoChange(appState_educationInfoData.filter((eduexp) => eduexp.id !== id));
-	}
+		seteducationInfoData(
+			educationInfoData.filter((eduexp) => eduexp.id !== id)
+		);
 
-	const deleteSkills = (id) => {
+		deleteEducation(id);
+
+		//console.log(appState_educationInfoData);
+		//console.log(educationInfoData);
+	};
+
+	const delete_skills = (id) => {
 		setSkillsList(skillsList.filter((skill) => skill.id !== id));
-		onSkillInfoChange(appState_skillInfoData.filter((skill) => skill.id !== id));
-	}
+		deleteSkills(id);
+	};
 
 	return (
 		<>
@@ -304,7 +302,9 @@ function Form({
 							<button onClick={() => saveEducationData(experience.id)}>
 								Save
 							</button>
-							<button onClick={() => deleteEduExp(experience.id) }>Delete</button>
+							<button onClick={() => deleteEduExp(experience.id)}>
+								Delete
+							</button>
 						</div>
 					))}
 				</div>
@@ -356,7 +356,9 @@ function Form({
 						></input>
 
 						<button onClick={() => saveJobData(jobexperience.id)}>Save</button>
-						<button onClick={() => deleteJobExp(jobexperience.id)}>Delete</button>
+						<button onClick={() => deleteJobExp(jobexperience.id)}>
+							Delete
+						</button>
 					</div>
 				))}
 			</fieldset>
@@ -377,7 +379,7 @@ function Form({
 							onChange={(e) => handleSkillsChange(skill.id, e)}
 						></input>
 						<button onClick={() => saveSkillsData(skill.id)}>Save</button>
-						<button onClick={() => deleteSkills(skill.id)}>Delete</button>
+						<button onClick={() => delete_skills(skill.id)}>Delete</button>
 					</div>
 				))}
 			</fieldset>

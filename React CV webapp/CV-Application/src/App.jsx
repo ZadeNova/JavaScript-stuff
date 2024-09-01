@@ -3,6 +3,8 @@ import "./css/main.css";
 import CVForm from "./components/CVForm.jsx";
 import CVDisplay from "./components/CVDisplay.jsx";
 
+// A barebones CV creator web application.
+
 function App() {
 	//const [count, setCount] = useState(0);
 
@@ -32,18 +34,17 @@ function App() {
 		setpersonalInfoData(newdata);
 	};
 
-	const addEducationInfoToList = (newdata) => {
-		setEducationList([...educationDataList, newdata]);
-	};
-
-	const deleteEducationInfoFromList = (idToRemove) => {
-		setEducationList(
-			appState_educationInfoData.filter((education) => education.id !== idToRemove)
+	const deleteEducationInfo = (idToRemove) => {
+		set_AppState_educationInfoData(
+			appState_educationInfoData.filter(
+				(education) => education.id !== idToRemove
+			)
 		);
+		//onsole.log(appState_educationInfoData);
 	};
 
-	const deleteJobExperienceInfoFromList = (idToRemove) => {
-		setjobExperienceDataList(
+	const deleteJobExperienceInfo = (idToRemove) => {
+		set_AppState_jobExperienceInfoData(
 			appState_jobExperienceInfoData.filter(
 				(jobExperience) => jobExperience.id !== idToRemove
 			)
@@ -51,7 +52,7 @@ function App() {
 	};
 
 	const deleteSkills = (idToRemove) => {
-		settechnicalSkillsList(
+		set_AppState_skillInfoData(
 			appState_skillInfoData.filter((skills) => skills.id !== idToRemove)
 		);
 	};
@@ -133,20 +134,18 @@ function App() {
 							onJobExperienceInfoChange={handleJobExperienceFormChange}
 							onSkillInfoChange={handleSkillFormChange}
 							addSkillsToList={addtechnicalSkillsToList}
-							educationList={educationDataList}
-							jobExperienceList={jobExperienceDataList}
 							appState_skillInfoData={appState_skillInfoData}
-							deleteEducation={deleteEducationInfoFromList}
-							deleteJobExperience={deleteJobExperienceInfoFromList}
+							deleteEducation={deleteEducationInfo}
+							deleteJobExperience={deleteJobExperienceInfo}
 							deleteSkills={deleteSkills}
 						></CVForm>
 					</div>
 					<div className="right-side">
-						<CVDisplay 
-						 personalInfoData = {personalInfoData}
-						 educationData = {appState_educationInfoData}
-						 jobData = {appState_jobExperienceInfoData}
-						 skillsData = {appState_skillInfoData}
+						<CVDisplay
+							personalInfoData={personalInfoData}
+							educationData={appState_educationInfoData}
+							jobData={appState_jobExperienceInfoData}
+							skillsData={appState_skillInfoData}
 						></CVDisplay>
 					</div>
 				</div>
