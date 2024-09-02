@@ -8,7 +8,13 @@ function displayCV({ personalInfoData, educationData, jobData, skillsData }) {
 			<main className="displayCV">
 				<section className="displayPersonalInfo">
 					<h3>{personalInfoData.Name}</h3>
-					<h3>{personalInfoData.phoneNumber}</h3>
+					<h4>{personalInfoData.professionalTitle}</h4>
+				</section>
+
+				<section className="displayContactableInfo">
+					<h4>Phone Number: {personalInfoData.phoneNumber}</h4>
+					<h4>Email: {personalInfoData.Email}</h4>
+					<h4>Personal Website: {personalInfoData.website_link}</h4>
 				</section>
 
 				<section className="displayEducationBackground CVtitle">

@@ -11,6 +11,9 @@ function App() {
 	const [personalInfoData, setpersonalInfoData] = useState({
 		Name: "",
 		phoneNumber: "",
+		ProfessionalTitle: "",
+		Email: "",
+		website_link: "",
 	});
 
 	//const [educationDataList, setEducationList] = useState([]);

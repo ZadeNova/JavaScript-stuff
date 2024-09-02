@@ -16,7 +16,8 @@ html {
 }
 
 .left-side {
-	background-color: #f4f4f4; /* Light background for the form */
+	background-color: #f3f3f4; /* Light background for the form */
+	overflow-x: hidden;
 	/* display: flex; */
 	/* align-items: center; */
 	/* justify-content: center; */
@@ -49,6 +50,17 @@ label {
 
 .AppTitle{
 	text-align: center;
+}
+
+legend {
+	font-weight: bold;
+	color: #556B2F;
+	
+}
+
+fieldset {
+	border-color: #4682B4;
+	border-radius: 10px;
 }
 
 

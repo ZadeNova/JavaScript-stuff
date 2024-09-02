@@ -25,6 +25,10 @@ function Form({
 	const [firstName, setfirstName] = useState("");
 	const [lastName, setlastName] = useState("");
 	const [phoneNumber, setphoneNumber] = useState("");
+	const [email , setEmail] = useState("");
+	const [websitelink , setWebsiteLink] = useState("");
+	const [professionalTitle , setprofessionalTitle] = useState("");
+
 
 	const [skillsList, setSkillsList] = useState([]);
 
@@ -85,6 +89,19 @@ function Form({
 		setphoneNumber(event.target.value);
 	};
 
+	const handleEmailChange = (event) => {
+		setEmail(event.target.value);
+	}
+
+	const handleProfessionalTitle = (event) => {
+		setprofessionalTitle(event.target.value);
+	}
+
+	const handleWebsiteLink = (event) => {
+		setWebsiteLink(event.target.value);
+	}
+
+
 	const handleSkillsChange = (id, event) => {
 		const { name, value } = event.target;
 
@@ -119,6 +136,9 @@ function Form({
 			...personalInfoFormData,
 			Name: firstName + " " + lastName,
 			phoneNumber: phoneNumber,
+			Email: email,
+			website_link: websitelink,
+			professionalTitle: professionalTitle,
 		});
 	};
 
@@ -253,6 +273,15 @@ function Form({
 					value={phoneNumber}
 					onChange={handlePhoneNumChange}
 				></input>
+
+				<label htmlFor="Email">Email</label>
+				<input type="email" id="Email" name="Email" value={email} onChange={handleEmailChange}></input>
+
+				<label htmlFor="professionalTitle">Professional Title</label>
+				<input type="text" id="professionalTitle" name="professionalTitle" value={professionalTitle} onChange={handleProfessionalTitle}></input>
+
+				<label htmlFor="websiteLink">Website Link</label>
+				<input type="text" id="websiteLink" name="websiteLink" value={websitelink} onChange={handleWebsiteLink}></input>
 
 				<button onClick={saveGeneralInformationData}>Save</button>
 			</fieldset>
