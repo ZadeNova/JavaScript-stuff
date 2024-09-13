@@ -3,6 +3,7 @@ import Home from "./home";
 import ShopPage from "./shoppage";
 import ErrorPage from "./errorpage";
 import { Navigate } from "react-router-dom";
+import DisplayIndividualProduct from "./productpage";
 
 const routes = [
 	{
@@ -14,6 +15,7 @@ const routes = [
 			{ path: "/", element: <Navigate to="/Home" /> },
 			{ path: "/Home", element: <Home /> },
 			{ path: "/ShopPage", element: <ShopPage /> },
+			{path: "/product/:productID", element: <DisplayIndividualProduct/>}
 		],
 	},
 ];
