@@ -15,7 +15,7 @@ const routes = [
 			{ path: "/", element: <Navigate to="/Home" /> },
 			{ path: "/Home", element: <Home /> },
 			{ path: "/ShopPage", element: <ShopPage /> },
-			{path: "/product/:productID", element: <DisplayIndividualProduct/>}
+			{ path: "/product/:productID", element: <DisplayIndividualProduct /> },
 		],
 	},
 ];

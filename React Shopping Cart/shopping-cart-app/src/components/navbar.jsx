@@ -2,36 +2,34 @@ import {
 	Disclosure,
 	DisclosureButton,
 	DisclosurePanel,
-	Menu,
-	MenuButton,
-	MenuItem,
-	MenuItems,
 } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
-import TheShoppingCart from "./shoppingCart";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';   
-
-
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import { MyContext } from "./App";
+import "../css/App.css";
+import PropTypes from "prop-types";
 
 const navigation = [
+	{ name: "Home", href: "/Home", current: true },
 	{ name: "ShopPage", href: "/ShopPage", current: true },
-	{ name: "Team", href: "#", current: false },
-	{ name: "Projects", href: "#", current: false },
-	{ name: "About Us", href: "#", current: false },
 ];
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(" ");
 }
 
+export default function NavigationBar({ openCart }) {
+	const { shoppingcartList } = useContext(MyContext);
 
+	NavigationBar.propTypes = {
+		openCart: PropTypes.func.isRequired,
+	};
 
-export default function NavigationBar( {openCart} ) {
 	return (
-		<Disclosure as="nav" className="bg-gray-800">
+		<Disclosure as="nav" className="bg-gray-600">
 			<div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
 				<div className="relative flex h-16 items-center justify-between">
 					<div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -68,7 +66,7 @@ export default function NavigationBar( {openCart} ) {
 										aria-current={item.current ? "page" : undefined}
 										className={classNames(
 											item.current
-												? "bg-gray-900 text-white"
+												? "bg-gray-700 text-white"
 												: "text-gray-300 hover:bg-gray-700 hover:text-white",
 											"rounded-md px-3 py-2 text-sm font-medium"
 										)}
@@ -80,7 +78,8 @@ export default function NavigationBar( {openCart} ) {
 						</div>
 					</div>
 					<div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-						<FontAwesomeIcon icon={faShoppingCart} onClick={openCart} />
+						{<FontAwesomeIcon icon={faShoppingCart} onClick={openCart} />}
+						<div className="badge">{shoppingcartList.length}</div>
 					</div>
 				</div>
 			</div>
